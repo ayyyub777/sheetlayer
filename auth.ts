@@ -35,8 +35,8 @@ export const {
     async session({ session, token, user }) {
       // @ts-ignore
       session.accessToken = token.accessToken as string;
-      session.user.id = user.id;
       return session;
     },
   },
+  session: { strategy: "jwt" },
 });
