@@ -1,4 +1,4 @@
-import { notFound } from "next/navigation"
+import { notFound, redirect } from "next/navigation"
 
 import { dashboardConfig } from "@/config/dashboard"
 import { getCurrentUser } from "@/lib/session"
@@ -17,6 +17,12 @@ export default async function DashboardLayout({
 
   if (!user) {
     return notFound()
+  }
+
+  const { setup } = user
+
+  if (!setup) {
+    return redirect("/setup")
   }
 
   return (
