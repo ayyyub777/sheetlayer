@@ -42,3 +42,14 @@ export type DashboardConfig = {
   mainNav: MainNavItem[]
   sidebarNav: SidebarNavItem[]
 }
+
+export type StatusResponseDataType = {
+  title?: string
+  description?: string
+  data?: any
+}
+
+export type StatusResponseType = {
+  success?: StatusResponseDataType
+  error?: StatusResponseDataType
+}

@@ -41,10 +41,8 @@ model Session {
 
 model User {
   id            String    @id @default(cuid())
-  name          String?
   email         String?   @unique
   emailVerified DateTime?
-  image         String?
   setup         Boolean   @default(false)
   createdAt     DateTime  @default(now()) @map(name: "created_at")
   updatedAt     DateTime  @default(now()) @map(name: "updated_at")
@@ -52,6 +50,7 @@ model User {
   accounts    Account[]
   sessions    Session[]
   Spreadsheet Spreadsheet[]
+  Business    Business[]
 
   @@map(name: "users")
 }
@@ -63,6 +62,17 @@ model VerificationToken {
 
   @@unique([identifier, token])
   @@map(name: "verification_tokens")
+}
+
+model Business {
+  id     String  @id @default(cuid())
+  name   String  @unique
+  type   String?
+  userId String
+
+  user User @relation(fields: [userId], references: [id])
+
+  @@map(name: "businesses")
 }
 
 model Spreadsheet {

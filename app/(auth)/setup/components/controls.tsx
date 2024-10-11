@@ -2,7 +2,13 @@ import { Button } from "@/components/ui/button"
 import { Icons } from "@/components/icons"
 import { useSetupContext } from "../setupContext"
 
-export default function Controls({ isPending }: { isPending: boolean }) {
+export default function Controls({
+  isPending,
+  isDisabled,
+}: {
+  isPending: boolean
+  isDisabled?: boolean
+}) {
   const { activeStep, setActiveStep, lastStep } = useSetupContext()
 
   function handlePrevious() {
@@ -14,13 +20,14 @@ export default function Controls({ isPending }: { isPending: boolean }) {
   return (
     <div className="mt-4 flex justify-between">
       <Button
-        variant="secondary"
+        variant="link"
         onClick={handlePrevious}
         disabled={activeStep === 0}
+        className="px-0 text-muted-foreground hover:text-foreground hover:no-underline"
       >
         Previous
       </Button>
-      <Button type="submit" disabled={isPending}>
+      <Button type="submit" disabled={isPending || isDisabled}>
         {isPending && <Icons.spinner className="mr-2 h-4 w-4 animate-spin" />}
         {lastStep ? "Finish" : "Next"}
       </Button>

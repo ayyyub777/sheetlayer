@@ -1,7 +1,7 @@
 import {
   AlertTriangle,
   ArrowRight,
-  Check,
+  CheckCircle,
   ChevronLeft,
   ChevronRight,
   CreditCard,
@@ -21,6 +21,8 @@ import {
   Trash,
   User,
   X,
+  Plug,
+  ChevronDown,
   type Icon as LucideIcon,
 } from "lucide-react"
 
@@ -30,8 +32,10 @@ export const Icons = {
   logo: Database,
   close: X,
   spinner: Loader2,
+  plug: Plug,
   chevronLeft: ChevronLeft,
   chevronRight: ChevronRight,
+  chevronDown: ChevronDown,
   trash: Trash,
   post: FileText,
   page: File,
@@ -48,5 +52,5 @@ export const Icons = {
   sun: SunMedium,
   moon: Moon,
   laptop: Laptop,
-  check: Check,
+  check: CheckCircle,
 }

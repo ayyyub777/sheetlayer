@@ -1,15 +1,23 @@
 "use client"
 
 import { useState, useEffect, useCallback } from "react"
-import { useRouter } from "next/navigation"
+import { redirect, useRouter } from "next/navigation"
 import { SetupProvider } from "./setupContext"
 import ConnectGoogleSheets from "./components/steps/connect-google-sheets"
+import BusinessName from "./components/steps/business-name"
+import BusinessType from "./components/steps/business-type"
+import { completeSetup } from "@/actions/user"
+import { toast } from "@/components/ui/use-toast"
 
 interface StepItem {
   label: string
 }
 
-const steps: StepItem[] = [{ label: "Connect Google Sheets" }]
+const steps: StepItem[] = [
+  { label: "Connect Google" },
+  { label: "Business Name" },
+  { label: "Business Type" },
+]
 
 export default function SetupPage() {
   const router = useRouter()
@@ -19,7 +27,10 @@ export default function SetupPage() {
 
   const handleFinishSetup = useCallback(async () => {
     try {
-      // handle finish setup
+      const res = await completeSetup()
+      if (res?.success) {
+        router.push("/dashboard")
+      }
     } catch (error) {
       console.error("Failed to finish setup:", error)
     }
@@ -35,6 +46,10 @@ export default function SetupPage() {
     switch (activeStep) {
       case 0:
         return <ConnectGoogleSheets />
+      case 1:
+        return <BusinessName />
+      case 2:
+        return <BusinessType />
       default:
         return null
     }
