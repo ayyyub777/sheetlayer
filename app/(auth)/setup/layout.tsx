@@ -10,6 +10,8 @@ export default async function SetupLayout({
 }) {
   const user = await getCurrentUser()
 
+  console.log(user)
+
   if (!user) {
     redirect("login")
   }
