@@ -67,7 +67,7 @@ export default function SetupPage() {
                     {`${activeStep + 1}/${steps.length}`}
                   </p>
                 )}
-                <h2>{steps[activeStep].label}</h2>
+                <h2 className="h2">{steps[activeStep].label}</h2>
               </div>
               <div>{renderStepComponent()}</div>
             </>

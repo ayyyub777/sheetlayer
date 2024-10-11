@@ -45,13 +45,13 @@
     @apply bg-background text-foreground;
     font-feature-settings: "rlig" 1, "calt" 1;
   }
-  h1 {
+  .h1 {
     @apply font-heading text-5xl md:text-6xl;
   }
-  h2 {
+  .h2 {
     @apply font-heading text-4xl md:text-5xl;
   }
-  h3 {
+  .h3 {
     @apply font-heading text-3xl md:text-4xl;
   }
 }
