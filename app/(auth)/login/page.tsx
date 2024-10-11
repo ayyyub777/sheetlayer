@@ -26,7 +26,7 @@ export default function LoginPage() {
               <Icons.logo className="mx-auto mb-6 size-8" />
             </Link>
             <h2>Check your email</h2>
-            <p className="leading-normal text-muted-foreground sm:text-lg">
+            <p className="text-muted-foreground sm:text-lg">
               A magic link has been sent to your email address. Please check
               your inbox to complete your login.
             </p>
@@ -76,7 +76,7 @@ export default function LoginPage() {
               <Icons.logo className="mx-auto mb-6 size-8" />
             </Link>
             <h2>Sign in to {siteConfig.name}</h2>
-            <p className="leading-normal text-muted-foreground sm:text-lg">
+            <p className="text-muted-foreground sm:text-lg">
               Use email to sign in to your account
             </p>
           </div>

@@ -44,12 +44,11 @@ export default async function DashboardPage() {
           </div>
         ) : (
           <EmptyPlaceholder>
-            <EmptyPlaceholder.Icon name="post" />
+            <EmptyPlaceholder.Icon name="empty" />
             <EmptyPlaceholder.Title>No API's created</EmptyPlaceholder.Title>
             <EmptyPlaceholder.Description>
-              You don&apos;t have any API's yet. Start creating content.
+              You don&apos;t have any API's yet.
             </EmptyPlaceholder.Description>
-            <SpreadsheetCreateButton variant="outline" />
           </EmptyPlaceholder>
         )}
       </div>

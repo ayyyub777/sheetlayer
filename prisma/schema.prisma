@@ -41,9 +41,11 @@ model Session {
 
 model User {
   id            String    @id @default(cuid())
+  name          String?
   email         String?   @unique
   emailVerified DateTime?
   setup         Boolean   @default(false)
+  picture       String?
   createdAt     DateTime  @default(now()) @map(name: "created_at")
   updatedAt     DateTime  @default(now()) @map(name: "updated_at")
 

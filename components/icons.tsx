@@ -1,3 +1,4 @@
+import { empty } from "@prisma/client/runtime"
 import {
   AlertTriangle,
   ArrowRight,
@@ -23,6 +24,7 @@ import {
   X,
   Plug,
   ChevronDown,
+  FolderOpen,
   type Icon as LucideIcon,
 } from "lucide-react"
 
@@ -36,6 +38,7 @@ export const Icons = {
   chevronLeft: ChevronLeft,
   chevronRight: ChevronRight,
   chevronDown: ChevronDown,
+  empty: FolderOpen,
   trash: Trash,
   post: FileText,
   page: File,
