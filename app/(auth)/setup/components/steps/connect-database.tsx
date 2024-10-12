@@ -52,7 +52,7 @@ const ConnectDatabase: React.FC = () => {
 
   const handleSubmit = (e: React.FormEvent) => {
     e.preventDefault()
-    if (connections.length > 0) return
+    if (connections.length === 0) return
     setActiveStep(activeStep + 1)
   }
 
