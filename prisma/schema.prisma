@@ -7,28 +7,6 @@ datasource db {
   url      = env("DATABASE_URL")
 }
 
-model Account {
-  id                String   @id @default(cuid())
-  userId            String
-  type              String
-  provider          String
-  providerAccountId String
-  refresh_token     String?  @db.Text
-  access_token      String?  @db.Text
-  expires_at        Int?
-  token_type        String?
-  scope             String?
-  id_token          String?  @db.Text
-  session_state     String?
-  createdAt         DateTime @default(now()) @map(name: "created_at")
-  updatedAt         DateTime @default(now()) @map(name: "updated_at")
-
-  user User @relation(fields: [userId], references: [id], onDelete: Cascade)
-
-  @@unique([provider, providerAccountId])
-  @@map(name: "accounts")
-}
-
 model Session {
   id           String   @id @default(cuid())
   sessionToken String   @unique
@@ -49,12 +27,25 @@ model User {
   createdAt     DateTime  @default(now()) @map(name: "created_at")
   updatedAt     DateTime  @default(now()) @map(name: "updated_at")
 
-  accounts    Account[]
+  connections Connection[]
   sessions    Session[]
   Spreadsheet Spreadsheet[]
   Business    Business[]
 
   @@map(name: "users")
+}
+
+model Connection {
+  id           String   @id @default(uuid())
+  userId       String
+  provider     String
+  accessToken  String?
+  refreshToken String?
+  expiresAt    DateTime
+
+  user User @relation(fields: [userId], references: [id], onDelete: Cascade)
+
+  @@unique([provider, userId], name: "provider_user_unique")
 }
 
 model VerificationToken {

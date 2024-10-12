@@ -15,6 +15,7 @@ declare module "next-auth" {
       id: UserId
       setup: unknown
       picture: string | null | undefined
+      accessToken: unknown
     }
   }
 }

@@ -14,7 +14,7 @@ const sesClient = new SESClient({
 })
 
 export const authOptions: NextAuthOptions = {
-  adapter: PrismaAdapter(db as any),
+  adapter: PrismaAdapter(db),
   session: {
     strategy: "jwt",
   },
@@ -26,12 +26,8 @@ export const authOptions: NextAuthOptions = {
       from: env.SMTP_FROM,
       sendVerificationRequest: async ({ identifier, url, provider }) => {
         const user = await db.user.findUnique({
-          where: {
-            email: identifier,
-          },
-          select: {
-            emailVerified: true,
-          },
+          where: { email: identifier },
+          select: { emailVerified: true },
         })
 
         const subject = user?.emailVerified
@@ -43,18 +39,10 @@ export const authOptions: NextAuthOptions = {
 
         const params = {
           Source: provider.from as string,
-          Destination: {
-            ToAddresses: [identifier],
-          },
+          Destination: { ToAddresses: [identifier] },
           Message: {
-            Subject: {
-              Data: subject,
-            },
-            Body: {
-              Text: {
-                Data: bodyText,
-              },
-            },
+            Subject: { Data: subject },
+            Body: { Text: { Data: bodyText } },
           },
         }
 
@@ -83,19 +71,16 @@ export const authOptions: NextAuthOptions = {
         session.user.picture = token.picture
         session.user.setup = token.setup
       }
-
       return session
     },
     async jwt({ token, user }) {
       const dbUser = await db.user.findFirst({
-        where: {
-          email: token.email,
-        },
+        where: { email: token.email },
       })
 
       if (!dbUser) {
         if (user) {
-          token.id = user?.id
+          token.id = user.id
         }
         return token
       }

@@ -6,7 +6,7 @@ export default function Controls({
   isPending,
   isDisabled,
 }: {
-  isPending: boolean
+  isPending?: boolean
   isDisabled?: boolean
 }) {
   const { activeStep, setActiveStep, lastStep } = useSetupContext()

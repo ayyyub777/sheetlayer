@@ -1,13 +1,12 @@
 "use client"
 
 import { useState, useEffect, useCallback } from "react"
-import { redirect, useRouter } from "next/navigation"
+import { useRouter } from "next/navigation"
 import { SetupProvider } from "./setupContext"
-import ConnectGoogleSheets from "./components/steps/connect-google-sheets"
 import BusinessName from "./components/steps/business-name"
 import BusinessType from "./components/steps/business-type"
+import ConnectDatabase from "./components/steps/connect-database"
 import { completeSetup } from "@/actions/user"
-import { toast } from "@/components/ui/use-toast"
 
 interface StepItem {
   label: string
@@ -45,7 +44,7 @@ export default function SetupPage() {
   const renderStepComponent = () => {
     switch (activeStep) {
       case 0:
-        return <ConnectGoogleSheets />
+        return <ConnectDatabase />
       case 1:
         return <BusinessName />
       case 2:
