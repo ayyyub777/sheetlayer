@@ -6,7 +6,7 @@ export const dashboardConfig: DashboardConfig = {
     {
       title: "APIs",
       href: "/dashboard",
-      icon: "post",
+      icon: "table",
     },
     {
       title: "Settings",

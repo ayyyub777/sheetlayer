@@ -17,7 +17,6 @@ import {
   MoreVertical,
   Pizza,
   Plus,
-  Settings,
   SunMedium,
   Trash,
   User,
@@ -25,12 +24,15 @@ import {
   Plug,
   ChevronDown,
   FolderOpen,
+  Settings,
   type Icon as LucideIcon,
+  Table,
 } from "lucide-react"
 
 export type Icon = LucideIcon
 
 export const Icons = {
+  table: Table,
   logo: Database,
   close: X,
   spinner: Loader2,
