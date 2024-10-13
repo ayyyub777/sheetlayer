@@ -33,7 +33,6 @@ export default function ApiList({ defaultApis }: { defaultApis: Api[] }) {
         </div>
       ) : (
         <EmptyPlaceholder>
-          <EmptyPlaceholder.Icon name="empty" />
           <EmptyPlaceholder.Title>No APIs created</EmptyPlaceholder.Title>
           <EmptyPlaceholder.Description>
             You don&apos;t have any APIs yet.

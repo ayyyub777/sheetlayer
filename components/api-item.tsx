@@ -4,25 +4,32 @@ import { formatDate } from "@/lib/utils"
 import { Skeleton } from "@/components/ui/skeleton"
 import { Api } from "@prisma/client"
 import { ApiOperations } from "./api-operations"
+import { Button } from "./ui/button"
 
-interface ApiItemProps {
-  api: Pick<Api, "id" | "title" | "createdAt">
-}
-
-export function ApiItem({ api }: ApiItemProps) {
+export function ApiItem({ api }: { api: Api }) {
   return (
     <div className="flex items-center justify-between p-4">
       <div className="grid">
-        <Link href="" className="font-medium hover:underline">
+        <p className="text-lg font-medium first-letter:uppercase">
           {api.title}
-        </Link>
+        </p>
         <div>
           <p className="text-sm text-muted-foreground">
             {formatDate(api.createdAt?.toDateString())}
           </p>
         </div>
       </div>
-      <ApiOperations api={{ id: api.id }} />
+      <div className="flex gap-2">
+        <Link
+          href={`https://docs.google.com/spreadsheets/d/${api.spreadsheet}`}
+          target="_blank"
+        >
+          <Button variant="outline" size="sm">
+            Open in Spreadsheet
+          </Button>
+        </Link>
+        <ApiOperations api={{ id: api.id }} />
+      </div>
     </div>
   )
 }

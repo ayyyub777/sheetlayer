@@ -69,11 +69,12 @@ model Business {
 }
 
 model Api {
-  id        String   @id @default(cuid())
-  title     String
-  createdAt DateTime @default(now()) @map(name: "created_at")
-  updatedAt DateTime @default(now()) @map(name: "updated_at")
-  userId    String
+  id          String   @id @default(cuid())
+  title       String
+  spreadsheet String
+  createdAt   DateTime @default(now()) @map(name: "created_at")
+  updatedAt   DateTime @default(now()) @map(name: "updated_at")
+  userId      String
 
   user User @relation(fields: [userId], references: [id])
 

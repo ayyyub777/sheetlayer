@@ -27,6 +27,7 @@ import {
   Settings,
   type Icon as LucideIcon,
   Table,
+  MoreHorizontal,
 } from "lucide-react"
 
 export type Icon = LucideIcon
@@ -47,7 +48,7 @@ export const Icons = {
   media: Image,
   settings: Settings,
   billing: CreditCard,
-  ellipsis: MoreVertical,
+  ellipsis: MoreHorizontal,
   add: Plus,
   warning: AlertTriangle,
   user: User,
