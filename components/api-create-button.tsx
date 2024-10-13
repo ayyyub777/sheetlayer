@@ -13,6 +13,7 @@ interface ApiCreateButtonProps extends ButtonProps {}
 export function ApiCreateButton({
   className,
   variant,
+  size,
   ...props
 }: ApiCreateButtonProps) {
   const router = useRouter()
@@ -27,7 +28,7 @@ export function ApiCreateButton({
     <button
       onClick={onClick}
       className={cn(
-        buttonVariants({ variant }),
+        buttonVariants({ variant, size }),
         {
           "cursor-not-allowed opacity-60": isLoading,
         },
@@ -41,7 +42,7 @@ export function ApiCreateButton({
       ) : (
         <Icons.add className="mr-2 h-4 w-4" />
       )}
-      New API
+      Create new API
     </button>
   )
 }

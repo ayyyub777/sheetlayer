@@ -44,4 +44,7 @@
   .h3 {
     @apply font-heading text-3xl md:text-4xl;
   }
+  .h4 {
+    @apply font-heading text-3xl;
+  }
 }

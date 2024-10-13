@@ -10,7 +10,7 @@ export default async function DashboardPage() {
   return (
     <DashboardShell>
       <DashboardHeader heading="APIs" text="Create and manage APIs.">
-        <ApiCreateButton />
+        <ApiCreateButton size="sm" />
       </DashboardHeader>
       <ApiList defaultApis={apis} />
     </DashboardShell>

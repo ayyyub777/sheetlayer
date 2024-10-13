@@ -29,14 +29,14 @@ export function DashboardNav({ items }: DashboardNavProps) {
               <Link key={index} href={item.disabled ? "/" : item.href}>
                 <span
                   className={cn(
-                    "group flex h-10 items-center rounded-md px-4 py-2 text-sm font-medium hover:bg-accent hover:text-accent-foreground",
+                    "group flex h-9 items-center rounded-md px-4 py-2 text-sm font-medium hover:bg-accent hover:text-accent-foreground",
                     path === item.href ? "bg-accent" : "transparent",
                     path !== item.href &&
                       "hover:bg-accent/40 hover:text-accent-foreground",
                     item.disabled && "cursor-not-allowed opacity-80"
                   )}
                 >
-                  <Icon className="mr-3 size-[18px]" />
+                  <Icon className="mr-2 size-4" />
                   <span>{item.title}</span>
                 </span>
               </Link>
