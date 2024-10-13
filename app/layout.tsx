@@ -6,6 +6,7 @@ import { cn } from "@/lib/utils"
 import { Toaster } from "@/components/ui/toaster"
 import { Analytics } from "@/components/analytics"
 import { ThemeProvider } from "@/components/theme-provider"
+import { ModalProvider } from "@/components/modal-provider"
 
 const fontSans = FontSans({
   subsets: ["latin"],
@@ -36,6 +37,7 @@ export default function RootLayout({ children }: RootLayoutProps) {
           {children}
           <Analytics />
           <Toaster />
+          <ModalProvider />
         </ThemeProvider>
       </body>
     </html>

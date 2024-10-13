@@ -5,8 +5,8 @@ import { useRouter } from "next/navigation"
 
 import { cn } from "@/lib/utils"
 import { ButtonProps, buttonVariants } from "@/components/ui/button"
-import { toast } from "@/components/ui/use-toast"
 import { Icons } from "@/components/icons"
+import { useAddApiModal } from "@/hooks/modals/use-add-api-modal"
 
 interface ApiCreateButtonProps extends ButtonProps {}
 
@@ -17,39 +17,10 @@ export function ApiCreateButton({
 }: ApiCreateButtonProps) {
   const router = useRouter()
   const [isLoading, setIsLoading] = React.useState<boolean>(false)
+  const addApiModal = useAddApiModal()
 
-  async function onClick() {
-    setIsLoading(true)
-
-    const response = await fetch("/api/apis", {
-      method: "POST",
-      headers: {
-        "Content-Type": "application/json",
-      },
-      body: JSON.stringify({
-        title: "Untitled Api",
-      }),
-    })
-
-    setIsLoading(false)
-
-    if (!response?.ok) {
-      if (response.status === 402) {
-        return toast({
-          description: "Please upgrade to the PRO plan.",
-          variant: "destructive",
-        })
-      }
-
-      return toast({
-        description: "Your api was not created. Please try again.",
-        variant: "destructive",
-      })
-    }
-
-    const post = await response.json()
-
-    router.refresh()
+  function onClick() {
+    addApiModal.onOpen()
   }
 
   return (
