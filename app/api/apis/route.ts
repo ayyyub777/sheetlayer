@@ -5,6 +5,7 @@ import { authOptions } from "@/lib/auth"
 import { db } from "@/lib/db"
 import { NextResponse } from "next/server"
 import { createSpreadsheet } from "@/actions/spreadsheet"
+import { refreshAccessTokenIfNeeded } from "@/actions/refresh-token"
 
 const apiCreateSchema = z.object({
   title: z.string(),
@@ -60,27 +61,22 @@ export async function POST(req: Request) {
       return NextResponse.json({ error: "Unauthorized" }, { status: 401 })
     }
 
-    const spreadsheetConnection = await db.connection.findFirst({
-      where: {
-        userId: user.id,
-        provider: "google_sheets",
-      },
-    })
+    const accessToken = await refreshAccessTokenIfNeeded(
+      user.id,
+      "google_sheets"
+    )
 
-    if (!spreadsheetConnection || !spreadsheetConnection.accessToken) {
+    if (!accessToken) {
       return NextResponse.json(
-        { error: "Google Sheets connection required" },
-        { status: 400 }
+        { error: "Connection not found" },
+        { status: 404 }
       )
     }
 
     const json = await req.json()
     const body = apiCreateSchema.parse(json)
 
-    const spreadsheet = await createSpreadsheet(
-      spreadsheetConnection.accessToken,
-      body.title
-    )
+    const spreadsheet = await createSpreadsheet(accessToken, body.title)
 
     if (!spreadsheet) {
       return NextResponse.json(

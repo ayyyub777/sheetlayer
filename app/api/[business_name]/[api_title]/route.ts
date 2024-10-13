@@ -1,3 +1,4 @@
+import { refreshAccessTokenIfNeeded } from "@/actions/refresh-token"
 import { getSpreadsheetData } from "@/actions/spreadsheet"
 import { db } from "@/lib/db"
 import { NextResponse } from "next/server"
@@ -56,9 +57,11 @@ export async function GET(req: Request, { params }) {
       )
     }
 
-    const connection = api.user.connections[0]
-    const accessToken = connection.accessToken
     const spreadsheetId = api.spreadsheet
+    const accessToken = await refreshAccessTokenIfNeeded(
+      business.userId,
+      "google_sheets"
+    )
 
     if (!accessToken || !spreadsheetId) {
       return NextResponse.json(
