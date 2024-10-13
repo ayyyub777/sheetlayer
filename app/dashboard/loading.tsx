@@ -6,7 +6,7 @@ import { DashboardShell } from "@/components/shell"
 export default function DashboardLoading() {
   return (
     <DashboardShell>
-      <DashboardHeader heading="API's" text="Create and manage API's.">
+      <DashboardHeader heading="APIs" text="Create and manage APIs.">
         <ApiCreateButton />
       </DashboardHeader>
       <div className="divide-border-200 divide-y rounded-md border">

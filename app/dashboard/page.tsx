@@ -32,7 +32,7 @@ export default async function DashboardPage() {
 
   return (
     <DashboardShell>
-      <DashboardHeader heading="API's" text="Create and manage API's.">
+      <DashboardHeader heading="APIs" text="Create and manage APIs.">
         <ApiCreateButton />
       </DashboardHeader>
       <div>
@@ -45,9 +45,9 @@ export default async function DashboardPage() {
         ) : (
           <EmptyPlaceholder>
             <EmptyPlaceholder.Icon name="empty" />
-            <EmptyPlaceholder.Title>No API's created</EmptyPlaceholder.Title>
+            <EmptyPlaceholder.Title>No APIs created</EmptyPlaceholder.Title>
             <EmptyPlaceholder.Description>
-              You don&apos;t have any API's yet.
+              You don&apos;t have any APIs yet.
             </EmptyPlaceholder.Description>
           </EmptyPlaceholder>
         )}
