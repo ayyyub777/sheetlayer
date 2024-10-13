@@ -3,6 +3,7 @@ import * as z from "zod"
 
 import { authOptions } from "@/lib/auth"
 import { db } from "@/lib/db"
+import { NextResponse } from "next/server"
 
 const routeContextSchema = z.object({
   params: z.object({
@@ -18,7 +19,7 @@ export async function DELETE(
     const { params } = routeContextSchema.parse(context)
 
     if (!(await verifyCurrentUserHasAccessToPost(params.apiId))) {
-      return new Response(null, { status: 403 })
+      return NextResponse.json({ error: "Unauthorized" }, { status: 401 })
     }
 
     await db.api.delete({
@@ -27,13 +28,16 @@ export async function DELETE(
       },
     })
 
-    return new Response(null, { status: 204 })
+    return NextResponse.json({ success: true }, { status: 200 })
   } catch (error) {
     if (error instanceof z.ZodError) {
-      return new Response(JSON.stringify(error.issues), { status: 422 })
+      return NextResponse.json({ error: "Bad Request" }, { status: 400 })
     }
 
-    return new Response(null, { status: 500 })
+    return NextResponse.json(
+      { error: "Internal Server Error" },
+      { status: 500 }
+    )
   }
 }
 

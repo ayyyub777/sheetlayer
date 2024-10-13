@@ -3,6 +3,7 @@ import * as z from "zod"
 
 import { authOptions } from "@/lib/auth"
 import { db } from "@/lib/db"
+import { NextResponse } from "next/server"
 
 const apiCreateSchema = z.object({
   title: z.string(),
@@ -13,7 +14,7 @@ export async function GET() {
     const session = await getServerSession(authOptions)
 
     if (!session) {
-      return new Response("Unauthorized", { status: 403 })
+      return NextResponse.json({ error: "Unauthorized" }, { status: 401 })
     }
 
     const { user } = session
@@ -28,9 +29,12 @@ export async function GET() {
       },
     })
 
-    return new Response(JSON.stringify(apis))
+    return NextResponse.json(apis, { status: 200 })
   } catch (error) {
-    return new Response(null, { status: 500 })
+    return NextResponse.json(
+      { error: "Internal Server Error" },
+      { status: 500 }
+    )
   }
 }
 
@@ -39,7 +43,7 @@ export async function POST(req: Request) {
     const session = await getServerSession(authOptions)
 
     if (!session) {
-      return new Response("Unauthorized", { status: 403 })
+      return NextResponse.json({ error: "Unauthorized" }, { status: 401 })
     }
 
     const { user } = session
@@ -57,12 +61,17 @@ export async function POST(req: Request) {
       },
     })
 
-    return new Response(JSON.stringify(post))
+    return NextResponse.json(post, { status: 201 })
   } catch (error) {
     if (error instanceof z.ZodError) {
-      return new Response(JSON.stringify(error.issues), { status: 422 })
+      return new Response(JSON.stringify({ error: error.errors }), {
+        status: 400,
+      })
     }
 
-    return new Response(null, { status: 500 })
+    return NextResponse.json(
+      { error: "Internal Server Error" },
+      { status: 500 }
+    )
   }
 }
