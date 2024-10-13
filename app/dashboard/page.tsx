@@ -6,8 +6,8 @@ import { getCurrentUser } from "@/lib/session"
 import { EmptyPlaceholder } from "@/components/empty-placeholder"
 import { DashboardHeader } from "@/components/header"
 import { DashboardShell } from "@/components/shell"
-import { SpreadsheetCreateButton } from "@/components/spreadsheet-create-button"
-import { SpreadsheetItem } from "@/components/spreadsheet-item"
+import { ApiCreateButton } from "@/components/api-create-button"
+import { ApiItem } from "@/components/api-item"
 
 export default async function DashboardPage() {
   const user = await getCurrentUser()
@@ -16,7 +16,7 @@ export default async function DashboardPage() {
     redirect(authOptions?.pages?.signIn || "/login")
   }
 
-  const spreadsheets = await db.spreadsheet.findMany({
+  const apis = await db.api.findMany({
     where: {
       userId: user.id,
     },
@@ -33,13 +33,13 @@ export default async function DashboardPage() {
   return (
     <DashboardShell>
       <DashboardHeader heading="API's" text="Create and manage API's.">
-        <SpreadsheetCreateButton />
+        <ApiCreateButton />
       </DashboardHeader>
       <div>
-        {spreadsheets?.length ? (
+        {apis?.length ? (
           <div className="divide-y divide-border rounded-md border">
-            {spreadsheets.map((spreadsheet) => (
-              <SpreadsheetItem key={spreadsheet.id} spreadsheet={spreadsheet} />
+            {apis.map((api) => (
+              <ApiItem key={api.id} api={api} />
             ))}
           </div>
         ) : (

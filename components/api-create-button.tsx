@@ -8,26 +8,26 @@ import { ButtonProps, buttonVariants } from "@/components/ui/button"
 import { toast } from "@/components/ui/use-toast"
 import { Icons } from "@/components/icons"
 
-interface SpreadsheetCreateButtonProps extends ButtonProps {}
+interface ApiCreateButtonProps extends ButtonProps {}
 
-export function SpreadsheetCreateButton({
+export function ApiCreateButton({
   className,
   variant,
   ...props
-}: SpreadsheetCreateButtonProps) {
+}: ApiCreateButtonProps) {
   const router = useRouter()
   const [isLoading, setIsLoading] = React.useState<boolean>(false)
 
   async function onClick() {
     setIsLoading(true)
 
-    const response = await fetch("/api/spreadsheets", {
+    const response = await fetch("/api/apis", {
       method: "POST",
       headers: {
         "Content-Type": "application/json",
       },
       body: JSON.stringify({
-        title: "Untitled Spreadsheet",
+        title: "Untitled Api",
       }),
     })
 
@@ -42,7 +42,7 @@ export function SpreadsheetCreateButton({
       }
 
       return toast({
-        description: "Your spreadsheet was not created. Please try again.",
+        description: "Your api was not created. Please try again.",
         variant: "destructive",
       })
     }

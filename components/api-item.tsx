@@ -2,34 +2,32 @@ import Link from "next/link"
 
 import { formatDate } from "@/lib/utils"
 import { Skeleton } from "@/components/ui/skeleton"
-import { Spreadsheet } from "@prisma/client"
-import { SpreadsheetOperations } from "./spreadsheet-operations"
+import { Api } from "@prisma/client"
+import { ApiOperations } from "./api-operations"
 
-interface SpreadsheetItemProps {
-  spreadsheet: Pick<Spreadsheet, "id" | "title" | "createdAt">
+interface ApiItemProps {
+  api: Pick<Api, "id" | "title" | "createdAt">
 }
 
-export function SpreadsheetItem({ spreadsheet }: SpreadsheetItemProps) {
+export function ApiItem({ api }: ApiItemProps) {
   return (
     <div className="flex items-center justify-between p-4">
       <div className="grid">
         <Link href="" className="font-medium hover:underline">
-          {spreadsheet.title}
+          {api.title}
         </Link>
         <div>
           <p className="text-sm text-muted-foreground">
-            {formatDate(spreadsheet.createdAt?.toDateString())}
+            {formatDate(api.createdAt?.toDateString())}
           </p>
         </div>
       </div>
-      <SpreadsheetOperations
-        spreadsheet={{ id: spreadsheet.id, title: spreadsheet.title }}
-      />
+      <ApiOperations api={{ id: api.id, title: api.title }} />
     </div>
   )
 }
 
-SpreadsheetItem.Skeleton = function PostItemSkeleton() {
+ApiItem.Skeleton = function PostItemSkeleton() {
   return (
     <div className="p-4">
       <div className="space-y-3">

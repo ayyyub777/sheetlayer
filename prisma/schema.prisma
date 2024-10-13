@@ -29,7 +29,7 @@ model User {
 
   connections Connection[]
   sessions    Session[]
-  Spreadsheet Spreadsheet[]
+  Api         Api[]
   Business    Business[]
 
   @@map(name: "users")
@@ -68,7 +68,7 @@ model Business {
   @@map(name: "businesses")
 }
 
-model Spreadsheet {
+model Api {
   id        String   @id @default(cuid())
   title     String
   createdAt DateTime @default(now()) @map(name: "created_at")
@@ -77,5 +77,5 @@ model Spreadsheet {
 
   user User @relation(fields: [userId], references: [id])
 
-  @@map(name: "spreadsheets")
+  @@map(name: "Apis")
 }

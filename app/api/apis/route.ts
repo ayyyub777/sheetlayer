@@ -4,7 +4,7 @@ import * as z from "zod"
 import { authOptions } from "@/lib/auth"
 import { db } from "@/lib/db"
 
-const spreadsheetCreateSchema = z.object({
+const apiCreateSchema = z.object({
   title: z.string(),
 })
 
@@ -17,7 +17,7 @@ export async function GET() {
     }
 
     const { user } = session
-    const spreadsheets = await db.spreadsheet.findMany({
+    const apis = await db.api.findMany({
       select: {
         id: true,
         title: true,
@@ -28,7 +28,7 @@ export async function GET() {
       },
     })
 
-    return new Response(JSON.stringify(spreadsheets))
+    return new Response(JSON.stringify(apis))
   } catch (error) {
     return new Response(null, { status: 500 })
   }
@@ -45,9 +45,9 @@ export async function POST(req: Request) {
     const { user } = session
 
     const json = await req.json()
-    const body = spreadsheetCreateSchema.parse(json)
+    const body = apiCreateSchema.parse(json)
 
-    const post = await db.spreadsheet.create({
+    const post = await db.api.create({
       data: {
         title: body.title,
         userId: session.user.id,

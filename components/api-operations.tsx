@@ -3,7 +3,7 @@
 import * as React from "react"
 import Link from "next/link"
 import { useRouter } from "next/navigation"
-import { Spreadsheet } from "@prisma/client"
+import { Api } from "@prisma/client"
 
 import {
   AlertDialog,
@@ -25,14 +25,14 @@ import {
 import { toast } from "@/components/ui/use-toast"
 import { Icons } from "@/components/icons"
 
-async function deletePost(spreadsheetId: string) {
-  const response = await fetch(`/api/spreadsheets/${spreadsheetId}`, {
+async function deletePost(apiId: string) {
+  const response = await fetch(`/api/apis/${apiId}`, {
     method: "DELETE",
   })
 
   if (!response?.ok) {
     toast({
-      description: "Your spreadsheet was not deleted. Please try again.",
+      description: "Your api was not deleted. Please try again.",
       variant: "destructive",
     })
   }
@@ -41,10 +41,10 @@ async function deletePost(spreadsheetId: string) {
 }
 
 interface PostOperationsProps {
-  spreadsheet: Pick<Spreadsheet, "id" | "title">
+  api: Pick<Api, "id" | "title">
 }
 
-export function SpreadsheetOperations({ spreadsheet }: PostOperationsProps) {
+export function ApiOperations({ api }: PostOperationsProps) {
   const router = useRouter()
   const [showDeleteAlert, setShowDeleteAlert] = React.useState<boolean>(false)
   const [isDeleteLoading, setIsDeleteLoading] = React.useState<boolean>(false)
@@ -57,12 +57,6 @@ export function SpreadsheetOperations({ spreadsheet }: PostOperationsProps) {
           <span className="sr-only">Open</span>
         </DropdownMenuTrigger>
         <DropdownMenuContent align="end">
-          <DropdownMenuItem>
-            <Link href="" className="flex w-full">
-              Edit
-            </Link>
-          </DropdownMenuItem>
-          <DropdownMenuSeparator />
           <DropdownMenuItem
             className="flex cursor-pointer items-center text-destructive focus:text-destructive"
             onSelect={() => setShowDeleteAlert(true)}
@@ -88,7 +82,7 @@ export function SpreadsheetOperations({ spreadsheet }: PostOperationsProps) {
                 event.preventDefault()
                 setIsDeleteLoading(true)
 
-                const deleted = await deletePost(spreadsheet.id)
+                const deleted = await deletePost(api.id)
 
                 if (deleted) {
                   setIsDeleteLoading(false)
