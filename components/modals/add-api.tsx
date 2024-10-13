@@ -2,7 +2,7 @@
 
 import * as z from "zod"
 import { zodResolver } from "@hookform/resolvers/zod"
-import { useState, useTransition } from "react"
+import { useState } from "react"
 import { useForm } from "react-hook-form"
 
 import { useAddApiModal } from "@/hooks/modals/use-add-api-modal"
@@ -11,6 +11,8 @@ import { Form, FormControl, FormField, FormItem, FormMessage } from "../ui/form"
 import { Input } from "../ui/input"
 import { Label } from "../ui/label"
 import { Modal } from "../ui/modal"
+import { toast } from "../ui/use-toast"
+import { redirect } from "next/navigation"
 
 const ApiSchema = z.object({
   title: z.string().nonempty("Title is required"),
@@ -20,7 +22,7 @@ export default function AddApi() {
   const { isOpen, onClose } = useAddApiModal()
   const [success, setSuccess] = useState<StatusResponseDataType>()
   const [error, setError] = useState<StatusResponseDataType>()
-  const [isPending, startTransition] = useTransition()
+  const [isPending, setIsPending] = useState(false)
 
   const form = useForm<z.infer<typeof ApiSchema>>({
     resolver: zodResolver(ApiSchema),
@@ -29,8 +31,24 @@ export default function AddApi() {
     },
   })
 
-  const onSubmit = (values: z.infer<typeof ApiSchema>) => {
-    console.log(values)
+  const onSubmit = async (values: z.infer<typeof ApiSchema>) => {
+    setIsPending(true)
+    const response = await fetch("/api/apis", {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json",
+      },
+      body: JSON.stringify(values),
+    })
+    setIsPending(false)
+
+    if (!response?.ok) {
+      return toast({
+        description: "Your api was not created. Please try again.",
+      })
+    }
+
+    onClose()
   }
 
   return (
