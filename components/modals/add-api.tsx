@@ -43,8 +43,12 @@ export default function AddApi() {
     setIsPending(false)
 
     if (!response?.ok) {
-      return toast({
+      toast({
         description: "Your api was not created. Please try again.",
+      })
+    } else {
+      toast({
+        description: "Your api was successfully created.",
       })
     }
 

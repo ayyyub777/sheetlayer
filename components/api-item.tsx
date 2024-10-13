@@ -22,7 +22,7 @@ export function ApiItem({ api }: ApiItemProps) {
           </p>
         </div>
       </div>
-      <ApiOperations api={{ id: api.id, title: api.title }} />
+      <ApiOperations api={{ id: api.id }} />
     </div>
   )
 }

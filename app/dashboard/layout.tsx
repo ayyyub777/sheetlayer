@@ -39,8 +39,8 @@ export default async function DashboardLayout({
           />
         </div>
       </header>
-      <div className="container grid flex-1 gap-12 md:grid-cols-[200px_1fr]">
-        <aside className="hidden w-[200px] flex-col md:flex">
+      <div className="container grid flex-1 md:grid-cols-[220px_1fr] md:gap-12">
+        <aside className="flex w-full flex-col md:w-[220px]">
           <DashboardNav items={dashboardConfig.sidebarNav} />
         </aside>
         <main className="flex w-full flex-1 flex-col overflow-hidden">
