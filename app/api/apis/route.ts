@@ -89,10 +89,21 @@ export async function POST(req: Request) {
       )
     }
 
+    const business = await db.business.findFirst({
+      where: {
+        userId: user.id,
+      },
+    })
+
+    if (!business) {
+      return NextResponse.json({ error: "Business not found" }, { status: 404 })
+    }
+
     const api = await db.api.create({
       data: {
-        title: body.title,
+        title: body.title.toLowerCase(),
         userId: session.user.id,
+        businessId: business.id,
         spreadsheet: spreadsheet.spreadsheetId,
       },
       select: {

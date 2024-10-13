@@ -1,21 +1,21 @@
 import Link from "next/link"
-
-import { formatDate } from "@/lib/utils"
 import { Skeleton } from "@/components/ui/skeleton"
 import { Api } from "@prisma/client"
 import { ApiOperations } from "./api-operations"
 import { Button } from "./ui/button"
+import { env } from "@/env.mjs"
 
-export function ApiItem({ api }: { api: Api }) {
+export async function ApiItem({ api }: { api: Api }) {
+  const businessName = api.Business?.name
   return (
     <div className="flex items-center justify-between p-4">
-      <div className="grid">
-        <p className="text-lg font-medium first-letter:uppercase">
+      <div className="flex h-9 flex-col justify-center gap-1">
+        <p className="font-medium leading-none first-letter:uppercase">
           {api.title}
         </p>
         <div>
-          <p className="text-sm text-muted-foreground">
-            {formatDate(api.createdAt?.toDateString())}
+          <p className="text-sm leading-none text-muted-foreground">
+            {`${env.NEXT_PUBLIC_APP_URL}/api/${businessName}/${api.title}`}
           </p>
         </div>
       </div>
@@ -25,7 +25,7 @@ export function ApiItem({ api }: { api: Api }) {
           target="_blank"
         >
           <Button variant="outline" size="sm">
-            Open in Spreadsheet
+            Open in spreadsheet
           </Button>
         </Link>
         <ApiOperations api={{ id: api.id }} />

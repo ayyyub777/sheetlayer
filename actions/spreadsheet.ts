@@ -8,6 +8,27 @@ function getOAuth2Client(accessToken: string) {
   return oauth2Client
 }
 
+export async function getSpreadsheetMetadata(auth: any, spreadsheetId: string) {
+  const sheets = google.sheets({ version: "v4", auth })
+  const response = await sheets.spreadsheets.get({
+    spreadsheetId,
+  })
+
+  return response.data
+}
+
+export async function getSpreadsheetData(accessToken, spreadsheetId, range) {
+  const auth = getOAuth2Client(accessToken)
+  const sheets = google.sheets({ version: "v4", auth })
+
+  const response = await sheets.spreadsheets.values.get({
+    spreadsheetId,
+    range,
+  })
+
+  return response.data.values
+}
+
 export async function createSpreadsheet(accessToken: string, title: string) {
   const auth = getOAuth2Client(accessToken)
   const sheets = google.sheets({ version: "v4", auth })

@@ -27,8 +27,8 @@ export default function ApiList({ defaultApis }: { defaultApis: Api[] }) {
     <div>
       {apis?.length ? (
         <div className="divide-y divide-border rounded-md border">
-          {apis.map((api) => (
-            <ApiItem key={api.id} api={api} />
+          {apis.map((api, index) => (
+            <ApiItem key={index} api={api} />
           ))}
         </div>
       ) : (

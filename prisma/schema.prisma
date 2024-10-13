@@ -58,10 +58,10 @@ model VerificationToken {
 }
 
 model Business {
-  id     String  @id @default(cuid())
+  id     String @id @default(cuid())
   userId String
-  name   String  @unique
-  type   String?
+  name   String @unique
+  apis   Api[]
 
   user User @relation(fields: [userId], references: [id])
 
@@ -75,8 +75,10 @@ model Api {
   createdAt   DateTime @default(now()) @map(name: "created_at")
   updatedAt   DateTime @default(now()) @map(name: "updated_at")
   userId      String
+  businessId  String
 
-  user User @relation(fields: [userId], references: [id])
+  user     User     @relation(fields: [userId], references: [id])
+  Business Business @relation(fields: [businessId], references: [id])
 
   @@map(name: "Apis")
 }
