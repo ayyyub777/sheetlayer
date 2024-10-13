@@ -32,7 +32,6 @@ async function deletePost(spreadsheetId: string) {
 
   if (!response?.ok) {
     toast({
-      title: "Something went wrong.",
       description: "Your spreadsheet was not deleted. Please try again.",
       variant: "destructive",
     })

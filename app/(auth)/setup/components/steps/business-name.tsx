@@ -13,7 +13,9 @@ import {
   FormMessage,
 } from "@/components/ui/form"
 import { Label } from "@/components/ui/label"
-import { StatusResponseDataType } from "@/types"
+import { StatusResponseDataType, StatusResponseType } from "@/types"
+import { setBusinessName } from "@/actions/business"
+import { toast } from "@/components/ui/use-toast"
 
 const BusinessNameSchema = z.object({
   name: z.string().nonempty("Business name is required"),
@@ -32,9 +34,26 @@ export default function BusinessName() {
     },
   })
 
-  function onSubmit(values: z.infer<typeof BusinessNameSchema>) {
-    setActiveStep(activeStep + 1)
-    // startTransition(() => {})
+  async function onSubmit(values: z.infer<typeof BusinessNameSchema>) {
+    startTransition(() => {
+      setBusinessName(values)
+        .then((data?: StatusResponseType) => {
+          setError(data?.error)
+          setSuccess(data?.success)
+          if (data?.error) {
+            toast(data.error)
+          }
+        })
+        .catch((error) => {
+          toast({
+            description: "An unexpected error occurred",
+          })
+          console.error(error)
+        })
+        .finally(() => {
+          setActiveStep(activeStep + 1)
+        })
+    })
   }
 
   return (

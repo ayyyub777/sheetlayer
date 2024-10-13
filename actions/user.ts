@@ -4,17 +4,23 @@ import { authOptions } from "@/lib/auth"
 import { db } from "@/lib/db"
 import { getServerSession } from "next-auth"
 
-export async function completeSetup() {
+export async function getUserId() {
   const session = await getServerSession(authOptions)
   if (!session?.user) {
+    return null
+  }
+  return session.user.id
+}
+
+export async function completeSetup() {
+  const userId = await getUserId()
+  if (!userId) {
     return {
       error: {
-        title: "Authentication Required",
-        description: "Please sign in to update.",
+        description: "Authentication Required",
       },
     }
   }
-  const userId = session.user.id
 
   try {
     await db.user.update({
@@ -27,15 +33,13 @@ export async function completeSetup() {
     })
     return {
       success: {
-        title: "Setup Complete",
-        description: "You have successfully completed the setup process.",
+        description: "Setup Complete",
       },
     }
   } catch (error) {
     console.error("Error fetching name:", error)
     return {
       error: {
-        title: "Fetch Failed",
         description:
           "We encountered an issue. Please try again later or contact support if the problem persists.",
       },

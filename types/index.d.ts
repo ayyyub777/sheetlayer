@@ -44,7 +44,6 @@ export type DashboardConfig = {
 }
 
 export type StatusResponseDataType = {
-  title?: string
   description?: string
   data?: any
 }

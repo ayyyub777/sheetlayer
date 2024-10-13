@@ -36,14 +36,12 @@ export function SpreadsheetCreateButton({
     if (!response?.ok) {
       if (response.status === 402) {
         return toast({
-          title: "Limit of 3 spreadsheets reached.",
           description: "Please upgrade to the PRO plan.",
           variant: "destructive",
         })
       }
 
       return toast({
-        title: "Something went wrong.",
         description: "Your spreadsheet was not created. Please try again.",
         variant: "destructive",
       })

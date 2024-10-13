@@ -4,7 +4,6 @@ import { useState, useEffect, useCallback } from "react"
 import { useRouter } from "next/navigation"
 import { SetupProvider } from "./setupContext"
 import BusinessName from "./components/steps/business-name"
-import BusinessType from "./components/steps/business-type"
 import ConnectDatabase from "./components/steps/connect-database"
 import { completeSetup } from "@/actions/user"
 
@@ -15,7 +14,6 @@ interface StepItem {
 const steps: StepItem[] = [
   { label: "Connect Google" },
   { label: "Business Name" },
-  { label: "Business Type" },
 ]
 
 export default function SetupPage() {
@@ -47,8 +45,6 @@ export default function SetupPage() {
         return <ConnectDatabase />
       case 1:
         return <BusinessName />
-      case 2:
-        return <BusinessType />
       default:
         return null
     }
