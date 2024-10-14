@@ -4,7 +4,7 @@ import { db } from "@/lib/db"
 import { StatusResponseType } from "@/types"
 import { getUserId } from "./user"
 
-export const getApis = async (): Promise<StatusResponseType> => {
+export const getApis = async (business_name): Promise<StatusResponseType> => {
   const userId = await getUserId()
   if (!userId) {
     return {
@@ -14,9 +14,32 @@ export const getApis = async (): Promise<StatusResponseType> => {
     }
   }
 
+  if (!business_name) {
+    return {
+      error: {
+        description: "Business name is required",
+      },
+    }
+  }
+
+  const business = await db.business.findFirst({
+    where: {
+      name: business_name,
+      userId,
+    },
+  })
+
+  if (!business) {
+    return {
+      error: {
+        description: "Business not found",
+      },
+    }
+  }
+
   const apis = await db.api.findMany({
     where: {
-      userId,
+      businessId: business.id,
     },
     orderBy: {
       updatedAt: "desc",

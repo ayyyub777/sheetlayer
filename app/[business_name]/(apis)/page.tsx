@@ -4,8 +4,14 @@ import { ApiCreateButton } from "@/components/api-create-button"
 import { getApis } from "@/actions/api"
 import ApiList from "@/components/api-list"
 
-export default async function ApisPage() {
-  const apis = (await getApis().then((res) => res.success?.data)) || []
+export default async function ApisPage({
+  params,
+}: {
+  params: { business_name: string }
+}) {
+  const { business_name } = params
+  const apis =
+    (await getApis(business_name).then((res) => res.success?.data)) || []
 
   return (
     <DashboardShell>

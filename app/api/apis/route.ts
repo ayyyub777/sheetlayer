@@ -11,35 +11,6 @@ const apiCreateSchema = z.object({
   title: z.string(),
 })
 
-export async function GET() {
-  try {
-    const session = await getServerSession(authOptions)
-
-    if (!session) {
-      return NextResponse.json({ error: "Unauthorized" }, { status: 401 })
-    }
-
-    const { user } = session
-    const apis = await db.api.findMany({
-      select: {
-        id: true,
-        title: true,
-        createdAt: true,
-      },
-      where: {
-        userId: user.id,
-      },
-    })
-
-    return NextResponse.json(apis, { status: 200 })
-  } catch (error) {
-    return NextResponse.json(
-      { error: "Internal Server Error" },
-      { status: 500 }
-    )
-  }
-}
-
 export async function POST(req: Request) {
   try {
     const session = await getServerSession(authOptions)
@@ -98,7 +69,6 @@ export async function POST(req: Request) {
     const api = await db.api.create({
       data: {
         title: body.title.toLowerCase(),
-        userId: session.user.id,
         businessId: business.id,
         spreadsheet: spreadsheet.spreadsheetId,
       },

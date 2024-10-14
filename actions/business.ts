@@ -34,7 +34,7 @@ export const setBusinessName = async (
   try {
     await db.business.create({
       data: {
-        name: values.name,
+        name: values.name.toLowerCase(),
         user: {
           connect: {
             id: userId,
