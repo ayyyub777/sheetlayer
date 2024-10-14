@@ -47,6 +47,9 @@ export default async function DashboardLayout({
     where: {
       userId: user.id,
     },
+    include: {
+      apis: true,
+    },
   })
 
   return (

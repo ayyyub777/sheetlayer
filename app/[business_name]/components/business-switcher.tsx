@@ -20,13 +20,15 @@ import {
 } from "@/components/ui/popover"
 import { useParams, useRouter } from "next/navigation"
 import { Icons } from "@/components/icons"
-import { Business } from "@prisma/client"
+import { Api, Business } from "@prisma/client"
 
 type PopoverTriggerProps = React.ComponentPropsWithoutRef<typeof PopoverTrigger>
 
 interface BusinessSwitcherProps extends PopoverTriggerProps {
-  items: Business[]
+  items: (Business & { apis: Api[] })[]
 }
+
+const capitalize = (str) => (str ? str[0].toUpperCase() + str.slice(1) : "")
 
 const BusinessSwitcher = ({ className, items }: BusinessSwitcherProps) => {
   const params = useParams()
@@ -34,6 +36,7 @@ const BusinessSwitcher = ({ className, items }: BusinessSwitcherProps) => {
 
   const formattedItems = items.map((item) => ({
     name: item.name,
+    apis: item.apis.length || 0,
   }))
 
   const currentBusiness = formattedItems.find(
@@ -61,8 +64,11 @@ const BusinessSwitcher = ({ className, items }: BusinessSwitcherProps) => {
             {currentBusiness?.name.charAt(0).toUpperCase()}
           </div>
 
-          <div className="ml-3 flex flex-col text-left">
-            <span>{currentBusiness?.name}</span>
+          <div className="ml-2 flex flex-col text-left">
+            <span>{capitalize(currentBusiness?.name)}</span>
+            <span className="text-xs font-normal leading-none text-muted-foreground">
+              {currentBusiness?.apis || 0} APIs
+            </span>
           </div>
           <Icons.chevronsUpDown className="ml-auto h-4 w-4 shrink-0 opacity-50" />
         </Button>
@@ -83,8 +89,11 @@ const BusinessSwitcher = ({ className, items }: BusinessSwitcherProps) => {
                     {currentBusiness?.name.charAt(0).toUpperCase()}
                   </div>
 
-                  <div className="ml-3 flex flex-col text-left">
-                    <span>{business.name}</span>
+                  <div className="ml-2 flex flex-col text-left">
+                    <span>{capitalize(business.name)}</span>
+                    <span className="text-xs font-normal leading-none text-muted-foreground">
+                      {business?.apis || 0} APIs
+                    </span>
                   </div>
                   <Icons.check
                     className={cn(
