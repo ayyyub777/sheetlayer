@@ -55,7 +55,7 @@ const BusinessSwitcher = ({ className, items }: BusinessSwitcherProps) => {
           role="combobox"
           aria-expanded={open}
           aria-name="Select a business"
-          className="h-16 w-full justify-between"
+          className="h-[60px] w-full justify-between px-3"
         >
           <div className="flex h-10 w-10 items-center justify-center rounded-md bg-muted text-sm uppercase">
             {currentBusiness?.name.charAt(0).toUpperCase()}

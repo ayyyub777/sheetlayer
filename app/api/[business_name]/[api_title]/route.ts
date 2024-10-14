@@ -6,19 +6,32 @@ import { NextResponse } from "next/server"
 function convertSpreadsheetDataToJson(spreadsheetData) {
   if (
     !spreadsheetData ||
-    !Array.isArray(spreadsheetData) ||
-    spreadsheetData.length < 2
+    typeof spreadsheetData !== "object" ||
+    Object.keys(spreadsheetData).length === 0
   ) {
     return []
   }
 
-  const [keys, ...rows] = spreadsheetData
-  return rows.map((row) => {
-    return row.reduce((obj, value, index) => {
-      obj[keys[index]] = value
-      return obj
-    }, {})
-  })
+  const result = {}
+
+  for (const sheet in spreadsheetData) {
+    const data = spreadsheetData[sheet]
+
+    if (Array.isArray(data) && data.length >= 2) {
+      const [keys, ...rows] = data
+
+      result[sheet] = rows.map((row) => {
+        return row.reduce((obj, value, index) => {
+          obj[keys[index]] = value
+          return obj
+        }, {})
+      })
+    } else {
+      result[sheet] = []
+    }
+  }
+
+  return result
 }
 
 export async function GET(req: Request, { params }) {
@@ -37,24 +50,12 @@ export async function GET(req: Request, { params }) {
     const api = await db.api.findFirst({
       where: {
         title: api_title,
-        userId: business.userId,
-      },
-      include: {
-        user: {
-          include: {
-            connections: {
-              where: { provider: "google_sheets" },
-            },
-          },
-        },
+        businessId: business.id,
       },
     })
 
-    if (!api || !api.user.connections.length) {
-      return NextResponse.json(
-        { error: "API or connection not found" },
-        { status: 404 }
-      )
+    if (!api) {
+      return NextResponse.json({ error: "API not found" }, { status: 404 })
     }
 
     const spreadsheetId = api.spreadsheet
@@ -70,7 +71,7 @@ export async function GET(req: Request, { params }) {
       )
     }
 
-    const data = await getSpreadsheetData(accessToken, spreadsheetId, "Sheet1")
+    const data = await getSpreadsheetData(accessToken, spreadsheetId)
     const response = convertSpreadsheetDataToJson(data)
     return NextResponse.json(response, { status: 200 })
   } catch (error) {

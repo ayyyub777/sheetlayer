@@ -19,7 +19,7 @@ export default async function SetupLayout({
   const { setup } = user
 
   if (setup) {
-    return redirect("/dashboard")
+    return redirect("/")
   }
 
   return (

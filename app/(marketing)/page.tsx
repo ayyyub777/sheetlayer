@@ -3,8 +3,27 @@ import { cn } from "@/lib/utils"
 import { buttonVariants } from "@/components/ui/button"
 import { marketingConfig } from "@/config/marketing"
 import { MainNav } from "@/components/main-nav"
+import { getCurrentUser } from "@/lib/session"
+import { db } from "@/lib/db"
+import { redirect } from "next/navigation"
 
 export default async function IndexPage() {
+  const user = await getCurrentUser()
+
+  if (user) {
+    const business = await db.business.findFirst({
+      where: {
+        userId: user.id,
+      },
+    })
+
+    if (business) {
+      redirect(`/${business.name}`)
+    } else {
+      redirect("setup")
+    }
+  }
+
   return (
     <>
       <div className="flex min-h-screen flex-col">

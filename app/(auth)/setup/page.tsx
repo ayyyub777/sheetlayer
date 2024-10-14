@@ -26,7 +26,7 @@ export default function SetupPage() {
     try {
       const res = await completeSetup()
       if (res?.success) {
-        router.push("/dashboard")
+        router.push("/")
       }
     } catch (error) {
       console.error("Failed to finish setup:", error)

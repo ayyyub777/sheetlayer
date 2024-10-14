@@ -1,35 +1,58 @@
 "use server"
 
-import { google } from "googleapis"
+import { google, sheets_v4 } from "googleapis"
+import { OAuth2Client } from "google-auth-library"
 
-function getOAuth2Client(accessToken: string) {
+function getOAuth2Client(accessToken: string): OAuth2Client {
   const oauth2Client = new google.auth.OAuth2()
   oauth2Client.setCredentials({ access_token: accessToken })
   return oauth2Client
 }
 
-export async function getSpreadsheetMetadata(auth: any, spreadsheetId: string) {
-  const sheets = google.sheets({ version: "v4", auth })
-  const response = await sheets.spreadsheets.get({
-    spreadsheetId,
-  })
+type SheetData = (string | number | boolean | null)[][]
 
-  return response.data
+interface AllSheetData {
+  [sheetName: string]: SheetData
 }
 
-export async function getSpreadsheetData(accessToken, spreadsheetId, range) {
+export async function getSpreadsheetData(
+  accessToken: string,
+  spreadsheetId: string
+): Promise<AllSheetData> {
   const auth = getOAuth2Client(accessToken)
   const sheets = google.sheets({ version: "v4", auth })
 
-  const response = await sheets.spreadsheets.values.get({
+  const metadata = await sheets.spreadsheets.get({
     spreadsheetId,
-    range,
   })
 
-  return response.data.values
+  const sheetNames =
+    metadata.data.sheets?.map((sheet) => sheet.properties?.title as string) ||
+    []
+
+  const allData: AllSheetData = {}
+
+  for (const sheetName of sheetNames) {
+    const response = await sheets.spreadsheets.values.get({
+      spreadsheetId,
+      range: sheetName,
+    })
+
+    allData[sheetName] = response.data.values || []
+  }
+
+  return allData
 }
 
-export async function createSpreadsheet(accessToken: string, title: string) {
+interface CreateSpreadsheetResult {
+  spreadsheetId: string
+  spreadsheetUrl: string
+}
+
+export async function createSpreadsheet(
+  accessToken: string,
+  title: string
+): Promise<CreateSpreadsheetResult> {
   const auth = getOAuth2Client(accessToken)
   const sheets = google.sheets({ version: "v4", auth })
 
