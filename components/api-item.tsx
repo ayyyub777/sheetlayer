@@ -1,12 +1,16 @@
+"use client"
+
 import Link from "next/link"
-import { Skeleton } from "@/components/ui/skeleton"
+import { useParams } from "next/navigation"
 import { Api } from "@prisma/client"
 import { ApiOperations } from "./api-operations"
 import { Button } from "./ui/button"
 import { env } from "@/env.mjs"
 
-export async function ApiItem({ api }: { api: Api }) {
-  const businessName = api.Business?.name
+export function ApiItem({ api }: { api: Api }) {
+  const params = useParams()
+  const businessName = params?.business_name
+
   return (
     <div className="flex items-center justify-between p-4">
       <div className="flex h-9 flex-col justify-center gap-1">
@@ -29,17 +33,6 @@ export async function ApiItem({ api }: { api: Api }) {
           </Button>
         </Link>
         <ApiOperations api={{ id: api.id }} />
-      </div>
-    </div>
-  )
-}
-
-ApiItem.Skeleton = function PostItemSkeleton() {
-  return (
-    <div className="p-4">
-      <div className="space-y-3">
-        <Skeleton className="h-5 w-2/5" />
-        <Skeleton className="h-4 w-4/5" />
       </div>
     </div>
   )

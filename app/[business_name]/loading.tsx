@@ -9,13 +9,6 @@ export default function DashboardLoading() {
       <DashboardHeader heading="APIs" text="Create and manage APIs.">
         <ApiCreateButton />
       </DashboardHeader>
-      <div className="divide-border-200 divide-y rounded-md border">
-        <ApiItem.Skeleton />
-        <ApiItem.Skeleton />
-        <ApiItem.Skeleton />
-        <ApiItem.Skeleton />
-        <ApiItem.Skeleton />
-      </div>
     </DashboardShell>
   )
 }

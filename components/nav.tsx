@@ -10,9 +10,10 @@ import { ScrollArea, ScrollBar } from "./ui/scroll-area"
 
 interface DashboardNavProps {
   items: SidebarNavItem[]
+  business: string
 }
 
-export function DashboardNav({ items }: DashboardNavProps) {
+export function DashboardNav({ items, business }: DashboardNavProps) {
   const path = usePathname()
 
   if (!items?.length) {
@@ -22,17 +23,20 @@ export function DashboardNav({ items }: DashboardNavProps) {
   return (
     <ScrollArea className="w-full">
       <nav className="flex gap-2 md:flex-col">
-        {items.map((item, index) => {
+        {items.map((item) => {
           const Icon = Icons[item.icon || "arrowRight"]
           return (
             item.href && (
-              <Link key={index} href={item.disabled ? "/" : item.href}>
+              <Link
+                key={item.href}
+                href={item.disabled ? "/" : `/${business}/${item.href}`}
+              >
                 <span
                   className={cn(
                     "group flex h-9 items-center rounded-md px-4 py-2 text-sm font-medium hover:bg-accent hover:text-accent-foreground",
-                    path === item.href ? "bg-accent" : "transparent",
-                    path !== item.href &&
-                      "hover:bg-accent/40 hover:text-accent-foreground",
+                    path === `/${business}${item.href}`.replace(/\/$/, "")
+                      ? "bg-accent hover:bg-accent"
+                      : "transparent hover:bg-accent/50",
                     item.disabled && "cursor-not-allowed opacity-80"
                   )}
                 >

@@ -18,13 +18,6 @@ export const getApis = async (): Promise<StatusResponseType> => {
     where: {
       userId,
     },
-    include: {
-      Business: {
-        select: {
-          name: true,
-        },
-      },
-    },
     orderBy: {
       updatedAt: "desc",
     },

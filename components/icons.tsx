@@ -2,7 +2,7 @@ import { empty } from "@prisma/client/runtime"
 import {
   AlertTriangle,
   ArrowRight,
-  CheckCircle,
+  Check,
   ChevronLeft,
   ChevronRight,
   CreditCard,
@@ -25,6 +25,7 @@ import {
   ChevronDown,
   FolderOpen,
   Settings,
+  ChevronsUpDown,
   type Icon as LucideIcon,
   Table,
   MoreHorizontal,
@@ -41,6 +42,7 @@ export const Icons = {
   chevronLeft: ChevronLeft,
   chevronRight: ChevronRight,
   chevronDown: ChevronDown,
+  chevronsUpDown: ChevronsUpDown,
   empty: FolderOpen,
   trash: Trash,
   post: FileText,
@@ -58,5 +60,5 @@ export const Icons = {
   sun: SunMedium,
   moon: Moon,
   laptop: Laptop,
-  check: CheckCircle,
+  check: Check,
 }
