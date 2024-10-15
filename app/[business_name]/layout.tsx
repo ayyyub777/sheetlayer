@@ -2,11 +2,12 @@ import { notFound, redirect } from "next/navigation"
 
 import { dashboardConfig } from "@/config/dashboard"
 import { getCurrentUser } from "@/lib/session"
-import { MainNav } from "@/components/main-nav"
-import { DashboardNav } from "@/components/nav"
-import { UserAccountNav } from "@/components/user-account-nav"
+import { DashboardNav } from "@/app/[business_name]/components/nav"
+import { UserAccountNav } from "@/app/[business_name]/components/user-account-nav"
 import { db } from "@/lib/db"
 import BusinessSwitcher from "./components/business-switcher"
+import SearchInput from "./components/search-input"
+import { Icons } from "@/components/icons"
 
 interface DashboardLayoutProps {
   children?: React.ReactNode
@@ -54,19 +55,7 @@ export default async function DashboardLayout({
 
   return (
     <div className="flex min-h-screen flex-col space-y-6">
-      <header className="sticky top-0 z-40 bg-background">
-        <div className="container flex h-20 items-center justify-between py-6">
-          <MainNav items={dashboardConfig.mainNav} />
-          <UserAccountNav
-            user={{
-              name: user.name,
-              image: user.image,
-              email: user.email,
-            }}
-          />
-        </div>
-      </header>
-      <div className="container grid flex-1 gap-6 md:grid-cols-[220px_1fr] md:gap-12">
+      <div className="container grid flex-1 gap-6 pt-8 md:grid-cols-[220px_1fr] md:gap-12">
         <aside className="flex w-full flex-col gap-4 md:w-[220px]">
           <BusinessSwitcher items={businesses} />
           <DashboardNav
@@ -75,6 +64,16 @@ export default async function DashboardLayout({
           />
         </aside>
         <main className="flex w-full flex-1 flex-col overflow-hidden">
+          <header className="mb-4 flex h-[60px] items-start justify-between">
+            <SearchInput />
+            <UserAccountNav
+              user={{
+                name: user.name,
+                picture: user.picture,
+                email: user.email,
+              }}
+            />
+          </header>
           {children}
         </main>
       </div>

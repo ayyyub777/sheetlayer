@@ -28,7 +28,7 @@ export default async function SetupLayout({
         <div className="flex w-full">
           <div className="flex items-center gap-7">
             <Link href="/" className="flex items-center">
-              <Icons.logo className="size-8" />
+              <Icons.logo className="h-8 w-auto" />
             </Link>
           </div>
         </div>
