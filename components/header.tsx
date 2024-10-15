@@ -12,7 +12,7 @@ export function DashboardHeader({
   return (
     <div className="flex items-center justify-between">
       <div className="grid">
-        <h1 className="h4">{heading}</h1>
+        <h1 className="h4 leading-none">{heading}</h1>
         {text && <p className="text-muted-foreground">{text}</p>}
       </div>
       {children}
