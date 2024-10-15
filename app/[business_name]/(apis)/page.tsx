@@ -1,8 +1,8 @@
 import { DashboardHeader } from "@/components/header"
 import { DashboardShell } from "@/components/shell"
-import { ApiCreateButton } from "@/components/api-create-button"
+import { ApiCreateButton } from "@/app/[business_name]/(apis)/components/api-create-button"
 import { getApis } from "@/actions/api"
-import ApiList from "@/components/api-list"
+import ApiList from "@/app/[business_name]/(apis)/components/api-list"
 
 export default async function ApisPage({
   params,
@@ -18,7 +18,7 @@ export default async function ApisPage({
       <DashboardHeader heading="APIs" text="Create and manage APIs.">
         <ApiCreateButton size="sm" />
       </DashboardHeader>
-      <ApiList defaultApis={apis} />
+      <ApiList defaultApis={apis} businessName={business_name} />
     </DashboardShell>
   )
 }

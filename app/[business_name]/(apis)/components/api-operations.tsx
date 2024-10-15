@@ -29,7 +29,7 @@ export function ApiOperations({ api }: { api: Pick<Api, "id"> }) {
           className="flex cursor-pointer items-center text-destructive focus:text-destructive"
           onSelect={handleDelete}
         >
-          Delete
+          Detach API
         </DropdownMenuItem>
       </DropdownMenuContent>
     </DropdownMenu>

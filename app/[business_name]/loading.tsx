@@ -1,5 +1,5 @@
 import { DashboardHeader } from "@/components/header"
-import { ApiCreateButton } from "@/components/api-create-button"
+import { ApiCreateButton } from "@/app/[business_name]/(apis)/components/api-create-button"
 import { ApiItem } from "@/components/api-item"
 import { DashboardShell } from "@/components/shell"
 

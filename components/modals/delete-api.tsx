@@ -44,8 +44,8 @@ export default function DeleteApi() {
 
   return (
     <Modal
-      title="Delete API"
-      description="Are you sure you want to delete this API? This action cannot be undone."
+      title="Detach API"
+      description="Detaching this API will remove it from your account, but it will remain in your spreadsheet and can be reattached anytime."
       isOpen={isOpen}
       onClose={onClose}
       action={{

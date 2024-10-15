@@ -1,7 +1,4 @@
-import { getServerSession } from "next-auth"
 import * as z from "zod"
-
-import { authOptions } from "@/lib/auth"
 import { db } from "@/lib/db"
 import { NextResponse } from "next/server"
 
@@ -17,10 +14,6 @@ export async function DELETE(
 ) {
   try {
     const { params } = routeContextSchema.parse(context)
-
-    if (!(await verifyCurrentUserHasAccessToPost(params.apiId))) {
-      return NextResponse.json({ error: "Unauthorized" }, { status: 401 })
-    }
 
     await db.api.delete({
       where: {
@@ -39,16 +32,4 @@ export async function DELETE(
       { status: 500 }
     )
   }
-}
-
-async function verifyCurrentUserHasAccessToPost(postId: string) {
-  const session = await getServerSession(authOptions)
-  const count = await db.api.count({
-    where: {
-      id: postId,
-      userId: session?.user.id,
-    },
-  })
-
-  return count > 0
 }

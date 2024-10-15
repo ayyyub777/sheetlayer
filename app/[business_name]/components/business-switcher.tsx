@@ -57,7 +57,6 @@ const BusinessSwitcher = ({ className, items }: BusinessSwitcherProps) => {
           variant="outline"
           role="combobox"
           aria-expanded={open}
-          aria-name="Select a business"
           className="h-[60px] w-full justify-between px-3"
         >
           <div className="flex h-10 w-10 items-center justify-center rounded-md bg-muted text-sm uppercase">
@@ -83,7 +82,7 @@ const BusinessSwitcher = ({ className, items }: BusinessSwitcherProps) => {
                 <CommandItem
                   key={business.name}
                   onSelect={() => onBusinessSelect(business)}
-                  className="text-sm font-medium"
+                  className="cursor-pointer text-sm font-medium"
                 >
                   <div className="flex h-10 w-10 items-center justify-center rounded-md bg-muted text-sm uppercase">
                     {currentBusiness?.name.charAt(0).toUpperCase()}
@@ -110,7 +109,7 @@ const BusinessSwitcher = ({ className, items }: BusinessSwitcherProps) => {
           <CommandSeparator />
           <CommandList>
             <CommandGroup>
-              <CommandItem>
+              <CommandItem className="cursor-pointer">
                 <Icons.add className="mr-2 h-4 w-4" />
                 <span className="text-sm font-medium">Add business</span>
               </CommandItem>
