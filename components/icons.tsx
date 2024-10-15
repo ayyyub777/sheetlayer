@@ -14,7 +14,7 @@ import {
   Laptop,
   Loader2,
   Moon,
-  MoreVertical,
+  Copy,
   Pizza,
   Plus,
   SunMedium,
@@ -34,6 +34,7 @@ import {
 export type Icon = LucideIcon
 
 export const Icons = {
+  copy: Copy,
   table: Table,
   logo: Database,
   close: X,

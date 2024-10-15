@@ -10,6 +10,12 @@ import { env } from "@/env.mjs"
 import Link from "next/link"
 import { Button } from "@/components/ui/button"
 import { ApiOperations } from "./api-operations"
+import {
+  Popover,
+  PopoverContent,
+  PopoverTrigger,
+} from "@/components/ui/popover"
+import { Icons } from "@/components/icons"
 
 export default function ApiList({
   defaultApis,
@@ -43,10 +49,25 @@ export default function ApiList({
                 <p className="font-medium leading-none first-letter:uppercase">
                   {api.title}
                 </p>
-                <div>
-                  <p className="text-sm leading-none text-muted-foreground">
+                <div
+                  className="flex items-end"
+                  onClick={() =>
+                    navigator.clipboard.writeText(
+                      `${env.NEXT_PUBLIC_APP_URL}/api/${businessName}/${api.title}`
+                    )
+                  }
+                >
+                  <p className="mr-2 cursor-text text-sm leading-none text-muted-foreground">
                     {`${env.NEXT_PUBLIC_APP_URL}/api/${businessName}/${api.title}`}
                   </p>
+                  <Popover>
+                    <PopoverTrigger className="text-muted-foreground">
+                      <Icons.copy className="size-3" />
+                    </PopoverTrigger>
+                    <PopoverContent className="w-fit px-2 py-1 text-xs">
+                      Copied!
+                    </PopoverContent>
+                  </Popover>
                 </div>
               </div>
               <div className="flex gap-2">
