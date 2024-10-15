@@ -26,20 +26,17 @@ export default function DeleteApi() {
     setIsPending(true)
     const response = await fetch(`/api/apis/${id}`, {
       method: "DELETE",
-    })
+    }).then((res) => res.json())
     setIsPending(false)
 
-    if (!response?.ok) {
+    if (response.error) {
       toast({
-        description: "Your api was not deleted. Please try again.",
+        description: response.error,
       })
+      onClose()
     } else {
-      toast({
-        description: "Your api was successfully deleted.",
-      })
+      onClose()
     }
-
-    onClose()
   }
 
   return (

@@ -69,7 +69,7 @@ model Business {
 
 model Api {
   id          String   @id @default(cuid())
-  title       String
+  title       String   @unique
   spreadsheet String
   createdAt   DateTime @default(now()) @map(name: "created_at")
   updatedAt   DateTime @default(now()) @map(name: "updated_at")

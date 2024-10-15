@@ -12,10 +12,11 @@ import { Input } from "../ui/input"
 import { Label } from "../ui/label"
 import { Modal } from "../ui/modal"
 import { toast } from "../ui/use-toast"
-import { redirect } from "next/navigation"
+import { useParams } from "next/navigation"
 
 const ApiSchema = z.object({
   title: z.string().nonempty("Title is required"),
+  businessName: z.string().optional(),
 })
 
 export default function AddApi() {
@@ -23,11 +24,15 @@ export default function AddApi() {
   const [success, setSuccess] = useState<StatusResponseDataType>()
   const [error, setError] = useState<StatusResponseDataType>()
   const [isPending, setIsPending] = useState(false)
+  const param = useParams<{ business_name?: string }>()
+
+  if (!param || typeof param.business_name !== "string") return null
 
   const form = useForm<z.infer<typeof ApiSchema>>({
     resolver: zodResolver(ApiSchema),
     defaultValues: {
       title: "",
+      businessName: param.business_name,
     },
   })
 
@@ -39,20 +44,17 @@ export default function AddApi() {
         "Content-Type": "application/json",
       },
       body: JSON.stringify(values),
-    })
+    }).then((res) => res.json())
     setIsPending(false)
 
-    if (!response?.ok) {
+    if (response.error) {
       toast({
-        description: "Your api was not created. Please try again.",
+        description: response.error,
       })
+      onClose()
     } else {
-      toast({
-        description: "Your api was successfully created.",
-      })
+      onClose()
     }
-
-    onClose()
   }
 
   return (

@@ -9,6 +9,7 @@ import { refreshAccessTokenIfNeeded } from "@/actions/refresh-token"
 
 const apiCreateSchema = z.object({
   title: z.string(),
+  businessName: z.string(),
 })
 
 export async function POST(req: Request) {
@@ -59,11 +60,23 @@ export async function POST(req: Request) {
     const business = await db.business.findFirst({
       where: {
         userId: user.id,
+        name: body.businessName,
       },
     })
 
     if (!business) {
       return NextResponse.json({ error: "Business not found" }, { status: 404 })
+    }
+
+    const existingApi = await db.api.findFirst({
+      where: {
+        title: body.title.toLowerCase(),
+        businessId: business.id,
+      },
+    })
+
+    if (existingApi) {
+      return NextResponse.json({ error: "API already exists" }, { status: 409 })
     }
 
     const api = await db.api.create({
