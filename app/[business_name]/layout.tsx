@@ -55,16 +55,21 @@ export default async function DashboardLayout({
 
   return (
     <div className="flex min-h-screen flex-col space-y-6">
-      <div className="container grid flex-1 gap-6 pt-8 md:grid-cols-[220px_1fr] md:gap-12">
-        <aside className="flex w-full flex-col gap-4 md:w-[220px]">
-          <BusinessSwitcher items={businesses} />
-          <DashboardNav
-            items={dashboardConfig.sidebarNav}
-            business={business.name}
-          />
+      <div className="container grid flex-1 gap-6 md:grid-cols-[220px_1fr] md:gap-12">
+        <aside className="flex w-full flex-col py-6 md:w-[220px]">
+          <div className="mb-8 flex h-10 items-center">
+            <Icons.logo className="h-[30px] w-auto" />
+          </div>
+          <div className="flex h-full flex-col justify-between">
+            <DashboardNav
+              items={dashboardConfig.sidebarNav}
+              business={business.name}
+            />
+            <BusinessSwitcher items={businesses} />
+          </div>
         </aside>
-        <main className="flex w-full flex-1 flex-col overflow-hidden">
-          <header className="mb-4 flex h-[60px] items-start justify-between">
+        <main className="flex w-full flex-1 flex-col overflow-hidden pt-6">
+          <header className="mb-8 flex h-10 items-center justify-between">
             <SearchInput placeholder="Search" />
             <UserAccountNav
               user={{

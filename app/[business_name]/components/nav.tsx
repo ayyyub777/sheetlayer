@@ -22,7 +22,7 @@ export function DashboardNav({ items, business }: DashboardNavProps) {
 
   return (
     <ScrollArea className="w-full">
-      <nav className="flex gap-2 md:flex-col">
+      <nav className="flex gap-1 md:flex-col">
         {items.map((item) => {
           const Icon = Icons[item.icon || "arrowRight"]
           return (

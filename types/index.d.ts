@@ -41,6 +41,7 @@ export type MarketingConfig = {
 export type DashboardConfig = {
   mainNav: MainNavItem[]
   sidebarNav: SidebarNavItem[]
+  userNav: NavItem[]
 }
 
 export type StatusResponseDataType = {

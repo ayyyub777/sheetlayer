@@ -57,13 +57,13 @@ const BusinessSwitcher = ({ className, items }: BusinessSwitcherProps) => {
           variant="outline"
           role="combobox"
           aria-expanded={open}
-          className="h-[60px] w-full justify-between px-3"
+          className="h-[52px] w-full justify-between px-3"
         >
-          <div className="flex h-10 w-10 items-center justify-center rounded-md bg-muted text-sm uppercase">
+          {/* <div className="flex h-10 w-10 items-center justify-center rounded-md bg-muted text-sm uppercase">
             {currentBusiness?.name.charAt(0).toUpperCase()}
-          </div>
+          </div> */}
 
-          <div className="ml-2 flex flex-col text-left">
+          <div className="ml-1 flex flex-col text-left">
             <span>{capitalize(currentBusiness?.name)}</span>
             <span className="text-xs font-normal leading-none text-muted-foreground">
               {currentBusiness?.apis || 0} APIs
@@ -84,11 +84,11 @@ const BusinessSwitcher = ({ className, items }: BusinessSwitcherProps) => {
                   onSelect={() => onBusinessSelect(business)}
                   className="cursor-pointer text-sm font-medium"
                 >
-                  <div className="flex h-10 w-10 items-center justify-center rounded-md bg-muted text-sm uppercase">
+                  {/* <div className="flex h-10 w-10 items-center justify-center rounded-md bg-muted text-sm uppercase">
                     {currentBusiness?.name.charAt(0).toUpperCase()}
-                  </div>
+                  </div> */}
 
-                  <div className="ml-2 flex flex-col text-left">
+                  <div className="ml-1 flex flex-col text-left">
                     <span>{capitalize(business.name)}</span>
                     <span className="text-xs font-normal leading-none text-muted-foreground">
                       {business?.apis || 0} APIs

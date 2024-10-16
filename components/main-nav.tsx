@@ -22,7 +22,7 @@ export function MainNav({ items, children }: MainNavProps) {
   return (
     <div className="flex gap-6">
       <Link href="/" className="flex items-center space-x-2">
-        <Icons.logo className="h-8 w-auto" />
+        <Icons.logo className="h-[30px] w-auto" />
       </Link>
       <nav className="flex gap-4">
         {items?.map((item, index) => (

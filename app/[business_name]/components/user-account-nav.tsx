@@ -12,6 +12,7 @@ import {
   DropdownMenuTrigger,
 } from "@/components/ui/dropdown-menu"
 import { UserAvatar } from "@/app/[business_name]/components/user-avatar"
+import { dashboardConfig } from "@/config/dashboard"
 
 interface UserAccountNavProps extends React.HTMLAttributes<HTMLDivElement> {
   user: Pick<User, "name" | "email" | "picture">
@@ -41,12 +42,16 @@ export function UserAccountNav({ user }: UserAccountNavProps) {
           </div>
         </div>
         <DropdownMenuSeparator />
-        <DropdownMenuItem asChild>
-          <Link href="/">Dashboard</Link>
-        </DropdownMenuItem>
-        <DropdownMenuItem asChild>
-          <Link href="/settings">Settings</Link>
-        </DropdownMenuItem>
+        {dashboardConfig.userNav.map((item) => (
+          <Link key={item.href} href={item.disabled ? "" : `${item.href}`}>
+            <DropdownMenuItem
+              className="cursor-pointer"
+              disabled={item.disabled}
+            >
+              {item.title}
+            </DropdownMenuItem>
+          </Link>
+        ))}
         <DropdownMenuSeparator />
         <DropdownMenuItem
           className="cursor-pointer"

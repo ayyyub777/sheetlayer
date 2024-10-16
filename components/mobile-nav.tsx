@@ -23,8 +23,7 @@ export function MobileNav({ items, children }: MobileNavProps) {
     >
       <div className="relative z-20 grid gap-6 rounded-md bg-popover p-4 text-popover-foreground ">
         <Link href="/" className="flex items-center space-x-2">
-          <Icons.logo className="h-8 w-auto" />
-          <span className="font-bold">{siteConfig.name}</span>
+          <Icons.logo className="h-[30px] w-auto" />
         </Link>
         <nav className="grid grid-flow-row auto-rows-max text-sm">
           {items.map((item, index) => (

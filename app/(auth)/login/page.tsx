@@ -23,7 +23,7 @@ export default function LoginPage() {
         <>
           <div className="flex flex-col gap-3 text-center">
             <Link href="/">
-              <Icons.logo className="mx-auto mb-6 h-8 w-auto" />
+              <Icons.logo className="mx-auto mb-6 h-[30px] w-auto" />
             </Link>
             <h2 className="h2">Check your email</h2>
             <p className="text-muted-foreground sm:text-lg">
@@ -73,7 +73,7 @@ export default function LoginPage() {
         <>
           <div className="flex flex-col gap-3 text-center">
             <Link href="/">
-              <Icons.logo className="mx-auto mb-6 h-8 w-auto" />
+              <Icons.logo className="mx-auto mb-6 h-[30px] w-auto" />
             </Link>
             <h2 className="h2">Sign in to {siteConfig.name}</h2>
             <p className="text-muted-foreground sm:text-lg">

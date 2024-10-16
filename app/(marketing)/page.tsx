@@ -48,7 +48,7 @@ export default async function IndexPage() {
                 Turn your Google Sheets into a powerful database that you can
                 use to build web apps, automate workflows, and more.
               </p>
-              <div className="space-x-4 space-y-4">
+              <div className="space-x-3 space-y-3">
                 <Link
                   href="/login"
                   className={cn(buttonVariants({ size: "lg" }), "px-4")}
@@ -58,7 +58,7 @@ export default async function IndexPage() {
                 <Link
                   href="/"
                   className={cn(
-                    buttonVariants({ variant: "outline", size: "lg" }),
+                    buttonVariants({ variant: "border", size: "lg" }),
                     "px-4"
                   )}
                 >
