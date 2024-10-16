@@ -29,7 +29,7 @@ export function UserAccountNav({ user }: UserAccountNavProps) {
           }}
         />
       </DropdownMenuTrigger>
-      <DropdownMenuContent align="end">
+      <DropdownMenuContent align="end" sideOffset={6}>
         <div className="flex items-center justify-start gap-2 p-2">
           <div className="flex flex-col">
             {user.name && <p className="text-sm font-medium">{user.name}</p>}

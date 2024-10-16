@@ -30,7 +30,6 @@ export default function ApiList({
 
   useEffect(() => {
     if (!addApiModal.isOpen && !deleteApiModal.isOpen) {
-      console.log("fetching apis")
       getApis(businessName).then((res) => {
         if (res?.success?.data) {
           setApis(res.success.data)
@@ -64,7 +63,10 @@ export default function ApiList({
                     <PopoverTrigger className="text-muted-foreground">
                       <Icons.copy className="size-3" />
                     </PopoverTrigger>
-                    <PopoverContent className="w-fit px-2 py-1 text-xs">
+                    <PopoverContent
+                      className="w-fit px-2 py-1 text-xs"
+                      sideOffset={6}
+                    >
                       Copied!
                     </PopoverContent>
                   </Popover>

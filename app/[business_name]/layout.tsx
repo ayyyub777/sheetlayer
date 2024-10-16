@@ -65,7 +65,7 @@ export default async function DashboardLayout({
         </aside>
         <main className="flex w-full flex-1 flex-col overflow-hidden">
           <header className="mb-4 flex h-[60px] items-start justify-between">
-            <SearchInput placeholder="Sreach APIs" />
+            <SearchInput placeholder="Search" />
             <UserAccountNav
               user={{
                 name: user.name,
