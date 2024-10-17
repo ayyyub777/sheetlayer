@@ -26,6 +26,7 @@ import {
   FolderOpen,
   Settings,
   ChevronsUpDown,
+  CheckCircle,
   type Icon as LucideIcon,
   Table,
   MoreHorizontal,
@@ -34,6 +35,7 @@ import {
 export type Icon = LucideIcon
 
 export const Icons = {
+  checkCircle: CheckCircle,
   copy: Copy,
   table: Table,
   logo: ({ ...props }) => (

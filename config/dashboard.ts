@@ -9,19 +9,14 @@ export const dashboardConfig: DashboardConfig = {
       icon: "table",
     },
     {
-      title: "APIs",
-      href: "/s",
-      icon: "table",
+      title: "Billing",
+      href: "/billing",
+      icon: "billing",
     },
     {
-      title: "APIs",
-      href: "/s",
-      icon: "table",
-    },
-    {
-      title: "APIs",
-      href: "/s",
-      icon: "table",
+      title: "Settings",
+      href: "/settings",
+      icon: "settings",
     },
   ],
   userNav: [
