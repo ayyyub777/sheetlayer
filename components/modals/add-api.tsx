@@ -26,15 +26,15 @@ export default function AddApi() {
   const [isPending, setIsPending] = useState(false)
   const param = useParams<{ business_name?: string }>()
 
-  if (!param || typeof param.business_name !== "string") return null
-
   const form = useForm<z.infer<typeof ApiSchema>>({
     resolver: zodResolver(ApiSchema),
     defaultValues: {
       title: "",
-      businessName: param.business_name,
+      businessName: param?.business_name || "",
     },
   })
+
+  if (!param || typeof param.business_name !== "string") return null
 
   const onSubmit = async (values: z.infer<typeof ApiSchema>) => {
     setIsPending(true)
