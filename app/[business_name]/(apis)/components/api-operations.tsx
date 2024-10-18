@@ -20,8 +20,8 @@ export function ApiOperations({ api }: { api: Pick<Api, "id"> }) {
   }
   return (
     <DropdownMenu>
-      <DropdownMenuTrigger className="flex h-9 w-9 items-center justify-center rounded-md border transition-colors hover:bg-muted">
-        <Icons.ellipsis className="h-4 w-4" />
+      <DropdownMenuTrigger className="flex size-9 items-center justify-center rounded-md border transition-colors hover:bg-muted">
+        <Icons.ellipsis className="size-4" />
         <span className="sr-only">Open</span>
       </DropdownMenuTrigger>
       <DropdownMenuContent align="end">

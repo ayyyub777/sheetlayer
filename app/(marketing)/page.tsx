@@ -50,9 +50,9 @@ export default async function IndexPage() {
         </header>
         <main className="flex-1">
           <section className="space-y-6 pb-8 pt-4">
-            <div className="container flex max-w-[64rem] flex-col items-center gap-3 text-center">
+            <div className="container flex max-w-5xl flex-col items-center gap-3 text-center">
               <h1 className="h1">Turn spreadsheets to realtime APIs</h1>
-              <p className="max-w-[42rem] text-muted-foreground sm:text-lg">
+              <p className="max-w-2xl text-muted-foreground sm:text-lg">
                 Turn your Google Sheets into a powerful database that you can
                 use to build web apps, automate workflows, and more.
               </p>
@@ -87,7 +87,7 @@ export default async function IndexPage() {
               />
               <div>
                 <h2 className="h2">Built with latest</h2>
-                <p className="mt-3 max-w-[42rem] text-muted-foreground sm:text-lg">
+                <p className="mt-3 max-w-2xl text-muted-foreground sm:text-lg">
                   Turn your Google Sheets into a powerful database that you can
                   use to build web apps, automate workflows, and more.
                 </p>

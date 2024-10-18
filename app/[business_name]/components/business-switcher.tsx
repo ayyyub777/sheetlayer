@@ -69,7 +69,7 @@ const BusinessSwitcher = ({ className, items }: BusinessSwitcherProps) => {
               {currentBusiness?.apis || 0} APIs
             </span>
           </div>
-          <Icons.chevronsUpDown className="ml-auto h-4 w-4 shrink-0 opacity-50" />
+          <Icons.chevronsUpDown className="ml-auto size-4 shrink-0 opacity-50" />
         </Button>
       </PopoverTrigger>
       <PopoverContent className="w-[220px] p-0">
@@ -96,7 +96,7 @@ const BusinessSwitcher = ({ className, items }: BusinessSwitcherProps) => {
                   </div>
                   <Icons.check
                     className={cn(
-                      "ml-auto h-4 w-4",
+                      "ml-auto size-4",
                       currentBusiness?.name === business.name
                         ? "opacity-50"
                         : "opacity-0"
@@ -110,7 +110,7 @@ const BusinessSwitcher = ({ className, items }: BusinessSwitcherProps) => {
           <CommandList>
             <CommandGroup>
               <CommandItem className="cursor-pointer">
-                <Icons.add className="mr-2 h-4 w-4" />
+                <Icons.add className="mr-2 size-4" />
                 <span className="text-sm font-medium">Add business</span>
               </CommandItem>
             </CommandGroup>

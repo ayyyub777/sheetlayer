@@ -36,7 +36,7 @@ export default function ApiList({
         }
       })
     }
-  }, [addApiModal.isOpen, deleteApiModal.isOpen])
+  }, [addApiModal.isOpen, deleteApiModal.isOpen, businessName])
 
   return (
     <div>
