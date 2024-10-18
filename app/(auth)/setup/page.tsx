@@ -58,11 +58,11 @@ export default function SetupPage() {
             <>
               <div>
                 {steps.length > 1 && (
-                  <p className="mb-4 text-lg text-muted-foreground">
+                  <p className="mb-2 text-lg text-muted-foreground">
                     {`${activeStep + 1}/${steps.length}`}
                   </p>
                 )}
-                <h2 className="h2">{steps[activeStep].label}</h2>
+                <h2 className="h3">{steps[activeStep].label}</h2>
               </div>
               <div>{renderStepComponent()}</div>
             </>

@@ -143,9 +143,9 @@ const ConnectButton: React.FC<ConnectButtonProps> = ({
       <Button
         type="button"
         size="sm"
-        className="bg-green-500 hover:bg-green-500"
+        className="bg-green-600 hover:bg-green-600"
       >
-        <Icons.check className="mr-2 size-4" />
+        <Icons.checkCircle className="mr-2 size-4" />
         Done
       </Button>
     )
