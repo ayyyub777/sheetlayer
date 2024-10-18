@@ -1,14 +1,13 @@
 import { NextRequest, NextResponse } from "next/server"
 import { getServerSession } from "next-auth/next"
 import { google } from "googleapis"
-import { env } from "@/env.mjs"
 import { db } from "@/lib/db"
 import { authOptions } from "@/lib/auth"
 
 const oauth2Client = new google.auth.OAuth2(
-  env.GOOGLE_CLIENT_ID,
-  env.GOOGLE_CLIENT_SECRET,
-  `${env.NEXTAUTH_URL}/api/google-sheets-callback`
+  process.env.GOOGLE_CLIENT_ID,
+  process.env.GOOGLE_CLIENT_SECRET,
+  `${process.env.NEXTAUTH_URL}/api/google-sheets-callback`
 )
 
 export async function GET(request: NextRequest) {

@@ -6,7 +6,6 @@ import { EmptyPlaceholder } from "@/components/empty-placeholder"
 import { getApis } from "@/actions/api"
 import { useAddApiModal } from "@/hooks/modals/use-add-api-modal"
 import { useDeleteApiModal } from "@/hooks/modals/use-delete-api-modal"
-import { env } from "@/env.mjs"
 import Link from "next/link"
 import { Button } from "@/components/ui/button"
 import { ApiOperations } from "./api-operations"
@@ -52,12 +51,12 @@ export default function ApiList({
                   className="flex items-end"
                   onClick={() =>
                     navigator.clipboard.writeText(
-                      `${env.NEXT_PUBLIC_APP_URL}/api/${businessName}/${api.title}`
+                      `${process.env.NEXT_PUBLIC_APP_URL}/api/${businessName}/${api.title}`
                     )
                   }
                 >
                   <p className="mr-2 cursor-text text-sm leading-none text-muted-foreground">
-                    {`${env.NEXT_PUBLIC_APP_URL}/api/${businessName}/${api.title}`}
+                    {`${process.env.NEXT_PUBLIC_APP_URL}/api/${businessName}/${api.title}`}
                   </p>
                   <Popover>
                     <PopoverTrigger className="text-muted-foreground">
