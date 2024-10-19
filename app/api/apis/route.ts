@@ -9,7 +9,7 @@ import { refreshAccessTokenIfNeeded } from "@/actions/refresh-token"
 
 const apiCreateSchema = z.object({
   title: z.string(),
-  businessName: z.string(),
+  workspaceName: z.string(),
 })
 
 export async function POST(req: Request) {
@@ -57,21 +57,24 @@ export async function POST(req: Request) {
       )
     }
 
-    const business = await db.business.findFirst({
+    const workspace = await db.workspace.findFirst({
       where: {
         userId: user.id,
-        name: body.businessName,
+        name: body.workspaceName,
       },
     })
 
-    if (!business) {
-      return NextResponse.json({ error: "Business not found" }, { status: 404 })
+    if (!workspace) {
+      return NextResponse.json(
+        { error: "Workspace not found" },
+        { status: 404 }
+      )
     }
 
     const existingApi = await db.api.findFirst({
       where: {
         title: body.title.toLowerCase(),
-        businessId: business.id,
+        workspaceId: workspace.id,
       },
     })
 
@@ -82,7 +85,7 @@ export async function POST(req: Request) {
     const api = await db.api.create({
       data: {
         title: body.title.toLowerCase(),
-        businessId: business.id,
+        workspaceId: workspace.id,
         spreadsheet: spreadsheet.spreadsheetId,
       },
       select: {

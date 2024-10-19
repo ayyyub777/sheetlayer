@@ -2,17 +2,17 @@ import { notFound, redirect } from "next/navigation"
 
 import { dashboardConfig } from "@/config/dashboard"
 import { getCurrentUser } from "@/lib/session"
-import { DashboardNav } from "@/app/[business_name]/components/nav"
-import { UserAccountNav } from "@/app/[business_name]/components/user-account-nav"
+import { DashboardNav } from "@/app/[workspace_name]/components/nav"
+import { UserAccountNav } from "@/app/[workspace_name]/components/user-account-nav"
 import { db } from "@/lib/db"
-import BusinessSwitcher from "./components/business-switcher"
+import WorkspaceSwitcher from "./components/workspace-switcher"
 import SearchInput from "./components/search-input"
 import { Icons } from "@/components/icons"
 
 interface DashboardLayoutProps {
   children?: React.ReactNode
   params?: {
-    business_name: string
+    workspace_name: string
   }
 }
 
@@ -32,19 +32,19 @@ export default async function DashboardLayout({
     return redirect("/setup")
   }
 
-  const businessName = params?.business_name
-  const business = await db.business.findFirst({
+  const workspaceName = params?.workspace_name
+  const workspace = await db.workspace.findFirst({
     where: {
-      name: businessName,
+      name: workspaceName,
       userId: user.id,
     },
   })
 
-  if (!business) {
+  if (!workspace) {
     return notFound()
   }
 
-  const businesses = await db.business.findMany({
+  const workspaces = await db.workspace.findMany({
     where: {
       userId: user.id,
     },
@@ -56,19 +56,19 @@ export default async function DashboardLayout({
   return (
     <div className="flex min-h-screen flex-col space-y-6">
       <div className="container grid flex-1 gap-6 md:grid-cols-[220px_1fr] md:gap-12">
-        <aside className="flex w-full flex-col py-6 md:w-[220px]">
-          <div className="mb-8 flex h-10 items-center">
+        <aside className="flex w-full flex-col py-5 md:w-[220px]">
+          <div className="mb-8 flex min-h-10 items-center">
             <Icons.logo className="h-[30px] w-auto" />
           </div>
           <div className="flex h-full flex-col justify-between">
             <DashboardNav
               items={dashboardConfig.sidebarNav}
-              business={business.name}
+              workspace={workspace.name}
             />
-            <BusinessSwitcher items={businesses} />
+            <WorkspaceSwitcher items={workspaces} />
           </div>
         </aside>
-        <main className="flex w-full flex-1 flex-col overflow-hidden pt-6">
+        <main className="flex w-full flex-1 flex-col overflow-hidden pt-5">
           <header className="mb-8 flex h-10 items-center justify-between">
             <SearchInput placeholder="Search" />
             <UserAccountNav

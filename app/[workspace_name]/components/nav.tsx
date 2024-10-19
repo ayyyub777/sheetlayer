@@ -10,10 +10,10 @@ import { ScrollArea, ScrollBar } from "@/components/ui/scroll-area"
 
 interface DashboardNavProps {
   items: SidebarNavItem[]
-  business: string
+  workspace: string
 }
 
-export function DashboardNav({ items, business }: DashboardNavProps) {
+export function DashboardNav({ items, workspace }: DashboardNavProps) {
   const path = usePathname()
 
   if (!items?.length) {
@@ -29,12 +29,12 @@ export function DashboardNav({ items, business }: DashboardNavProps) {
             item.href && (
               <Link
                 key={item.href}
-                href={item.disabled ? "/" : `/${business}/${item.href}`}
+                href={item.disabled ? "/" : `/${workspace}/${item.href}`}
               >
                 <span
                   className={cn(
                     "group flex h-9 items-center rounded-md px-4 py-2 text-sm font-medium hover:bg-accent hover:text-accent-foreground",
-                    path === `/${business}${item.href}`.replace(/\/$/, "")
+                    path === `/${workspace}${item.href}`.replace(/\/$/, "")
                       ? "bg-accent hover:bg-accent"
                       : "transparent hover:bg-accent/50",
                     item.disabled && "cursor-not-allowed opacity-80"

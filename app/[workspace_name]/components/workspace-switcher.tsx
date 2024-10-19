@@ -20,17 +20,17 @@ import {
 } from "@/components/ui/popover"
 import { useParams, useRouter } from "next/navigation"
 import { Icons } from "@/components/icons"
-import { Api, Business } from "@prisma/client"
+import { Api, Workspace } from "@prisma/client"
 
 type PopoverTriggerProps = React.ComponentPropsWithoutRef<typeof PopoverTrigger>
 
-interface BusinessSwitcherProps extends PopoverTriggerProps {
-  items: (Business & { apis: Api[] })[]
+interface workspaceSwitcherProps extends PopoverTriggerProps {
+  items: (Workspace & { apis: Api[] })[]
 }
 
 const capitalize = (str) => (str ? str[0].toUpperCase() + str.slice(1) : "")
 
-const BusinessSwitcher = ({ className, items }: BusinessSwitcherProps) => {
+const WorkspaceSwitcher = ({ className, items }: workspaceSwitcherProps) => {
   const params = useParams()
   const router = useRouter()
 
@@ -39,15 +39,15 @@ const BusinessSwitcher = ({ className, items }: BusinessSwitcherProps) => {
     apis: item.apis.length || 0,
   }))
 
-  const currentBusiness = formattedItems.find(
-    (item) => item.name === params?.business_name
+  const currentworkspace = formattedItems.find(
+    (item) => item.name === params?.workspace_name
   )
 
   const [open, setOpen] = React.useState(false)
 
-  const onBusinessSelect = (business) => {
+  const onworkspaceSelect = (workspace) => {
     setOpen(false)
-    router.push(`/${business.name}/apis`)
+    router.push(`/${workspace.name}/apis`)
   }
 
   return (
@@ -60,13 +60,13 @@ const BusinessSwitcher = ({ className, items }: BusinessSwitcherProps) => {
           className="h-[52px] w-full justify-between px-3"
         >
           {/* <div className="flex h-10 w-10 items-center justify-center rounded-md bg-muted text-sm uppercase">
-            {currentBusiness?.name.charAt(0).toUpperCase()}
+            {currentworkspace?.name.charAt(0).toUpperCase()}
           </div> */}
 
           <div className="ml-1 flex flex-col text-left">
-            <span>{capitalize(currentBusiness?.name)}</span>
+            <span>{capitalize(currentworkspace?.name)}</span>
             <span className="text-xs font-normal leading-none text-muted-foreground">
-              {currentBusiness?.apis || 0} APIs
+              {currentworkspace?.apis || 0} APIs
             </span>
           </div>
           <Icons.chevronsUpDown className="ml-auto size-4 shrink-0 opacity-50" />
@@ -75,29 +75,29 @@ const BusinessSwitcher = ({ className, items }: BusinessSwitcherProps) => {
       <PopoverContent className="w-[220px] p-0">
         <Command>
           <CommandList>
-            <CommandInput placeholder="Search business..." />
-            <CommandEmpty>No business found.</CommandEmpty>
+            <CommandInput placeholder="Search workspace..." />
+            <CommandEmpty>No workspace found.</CommandEmpty>
             <CommandGroup>
-              {formattedItems.map((business) => (
+              {formattedItems.map((workspace) => (
                 <CommandItem
-                  key={business.name}
-                  onSelect={() => onBusinessSelect(business)}
+                  key={workspace.name}
+                  onSelect={() => onworkspaceSelect(workspace)}
                   className="cursor-pointer text-sm font-medium"
                 >
                   {/* <div className="flex h-10 w-10 items-center justify-center rounded-md bg-muted text-sm uppercase">
-                    {currentBusiness?.name.charAt(0).toUpperCase()}
+                    {currentworkspace?.name.charAt(0).toUpperCase()}
                   </div> */}
 
                   <div className="ml-1 flex flex-col text-left">
-                    <span>{capitalize(business.name)}</span>
+                    <span>{capitalize(workspace.name)}</span>
                     <span className="text-xs font-normal leading-none text-muted-foreground">
-                      {business?.apis || 0} APIs
+                      {workspace?.apis || 0} APIs
                     </span>
                   </div>
                   <Icons.check
                     className={cn(
                       "ml-auto size-4",
-                      currentBusiness?.name === business.name
+                      currentworkspace?.name === workspace.name
                         ? "opacity-50"
                         : "opacity-0"
                     )}
@@ -111,7 +111,7 @@ const BusinessSwitcher = ({ className, items }: BusinessSwitcherProps) => {
             <CommandGroup>
               <CommandItem className="cursor-pointer">
                 <Icons.add className="mr-2 size-4" />
-                <span className="text-sm font-medium">Add business</span>
+                <span className="text-sm font-medium">Add workspace</span>
               </CommandItem>
             </CommandGroup>
           </CommandList>
@@ -121,4 +121,4 @@ const BusinessSwitcher = ({ className, items }: BusinessSwitcherProps) => {
   )
 }
 
-export default BusinessSwitcher
+export default WorkspaceSwitcher

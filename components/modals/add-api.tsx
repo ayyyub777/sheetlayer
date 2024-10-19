@@ -16,7 +16,7 @@ import { useParams } from "next/navigation"
 
 const ApiSchema = z.object({
   title: z.string().nonempty("Title is required"),
-  businessName: z.string().optional(),
+  workspaceName: z.string().optional(),
 })
 
 export default function AddApi() {
@@ -24,17 +24,17 @@ export default function AddApi() {
   const [success, setSuccess] = useState<StatusResponseDataType>()
   const [error, setError] = useState<StatusResponseDataType>()
   const [isPending, setIsPending] = useState(false)
-  const param = useParams<{ business_name?: string }>()
+  const param = useParams<{ workspace_name?: string }>()
 
   const form = useForm<z.infer<typeof ApiSchema>>({
     resolver: zodResolver(ApiSchema),
     defaultValues: {
       title: "",
-      businessName: param?.business_name || "",
+      workspaceName: param?.workspace_name || "",
     },
   })
 
-  if (!param || typeof param.business_name !== "string") return null
+  if (!param || typeof param.workspace_name !== "string") return null
 
   const onSubmit = async (values: z.infer<typeof ApiSchema>) => {
     setIsPending(true)

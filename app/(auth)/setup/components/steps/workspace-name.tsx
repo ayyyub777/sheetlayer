@@ -14,29 +14,29 @@ import {
 } from "@/components/ui/form"
 import { Label } from "@/components/ui/label"
 import { StatusResponseDataType, StatusResponseType } from "@/types"
-import { setBusinessName } from "@/actions/business"
+import { addWorkspace } from "@/actions/workspace"
 import { toast } from "@/components/ui/use-toast"
 
-const BusinessNameSchema = z.object({
-  name: z.string().nonempty("Business name is required"),
+const workspaceNameSchema = z.object({
+  name: z.string().nonempty("Workspace name is required"),
 })
 
-export default function BusinessName() {
+export default function WorkspaceName() {
   const { activeStep, setActiveStep } = useSetupContext()
   const [success, setSuccess] = useState<StatusResponseDataType>()
   const [error, setError] = useState<StatusResponseDataType>()
   const [isPending, startTransition] = useTransition()
 
-  const form = useForm<z.infer<typeof BusinessNameSchema>>({
-    resolver: zodResolver(BusinessNameSchema),
+  const form = useForm<z.infer<typeof workspaceNameSchema>>({
+    resolver: zodResolver(workspaceNameSchema),
     defaultValues: {
       name: "",
     },
   })
 
-  async function onSubmit(values: z.infer<typeof BusinessNameSchema>) {
+  async function onSubmit(values: z.infer<typeof workspaceNameSchema>) {
     startTransition(() => {
-      setBusinessName(values)
+      addWorkspace(values)
         .then((data?: StatusResponseType) => {
           setError(data?.error)
           setSuccess(data?.success)
@@ -66,7 +66,7 @@ export default function BusinessName() {
             <FormItem>
               <Label>Name</Label>
               <FormControl>
-                <Input placeholder="Business Name" {...field} />
+                <Input placeholder="Workspace name" {...field} />
               </FormControl>
               <FormMessage />
             </FormItem>

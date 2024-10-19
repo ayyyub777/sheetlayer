@@ -18,10 +18,10 @@ import { Icons } from "@/components/icons"
 
 export default function ApiList({
   defaultApis,
-  businessName,
+  workspaceName,
 }: {
   defaultApis: Api[]
-  businessName: string
+  workspaceName: string
 }) {
   const addApiModal = useAddApiModal()
   const deleteApiModal = useDeleteApiModal()
@@ -29,13 +29,13 @@ export default function ApiList({
 
   useEffect(() => {
     if (!addApiModal.isOpen && !deleteApiModal.isOpen) {
-      getApis(businessName).then((res) => {
+      getApis(workspaceName).then((res) => {
         if (res?.success?.data) {
           setApis(res.success.data)
         }
       })
     }
-  }, [addApiModal.isOpen, deleteApiModal.isOpen, businessName])
+  }, [addApiModal.isOpen, deleteApiModal.isOpen, workspaceName])
 
   return (
     <div>
@@ -51,12 +51,12 @@ export default function ApiList({
                   className="flex items-end"
                   onClick={() =>
                     navigator.clipboard.writeText(
-                      `${process.env.NEXT_PUBLIC_APP_URL}/api/${businessName}/${api.title}`
+                      `${process.env.NEXT_PUBLIC_APP_URL}/api/${workspaceName}/${api.title}`
                     )
                   }
                 >
                   <p className="mr-2 cursor-text text-sm leading-none text-muted-foreground">
-                    {`${process.env.NEXT_PUBLIC_APP_URL}/api/${businessName}/${api.title}`}
+                    {`${process.env.NEXT_PUBLIC_APP_URL}/api/${workspaceName}/${api.title}`}
                   </p>
                   <Popover>
                     <PopoverTrigger className="text-muted-foreground">

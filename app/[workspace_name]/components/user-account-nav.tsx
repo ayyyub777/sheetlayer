@@ -10,7 +10,7 @@ import {
   DropdownMenuSeparator,
   DropdownMenuTrigger,
 } from "@/components/ui/dropdown-menu"
-import { UserAvatar } from "@/app/[business_name]/components/user-avatar"
+import { UserAvatar } from "@/app/[workspace_name]/components/user-avatar"
 import { dashboardConfig } from "@/config/dashboard"
 
 type User = {

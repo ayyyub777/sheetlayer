@@ -22,14 +22,14 @@ export default async function IndexPage() {
   const user = await getCurrentUser()
 
   if (user) {
-    const business = await db.business.findFirst({
+    const workspace = await db.workspace.findFirst({
       where: {
         userId: user.id,
       },
     })
 
-    if (business) {
-      redirect(`/${business.name}`)
+    if (workspace) {
+      redirect(`/${workspace.name}`)
     } else {
       redirect("setup")
     }
@@ -38,8 +38,8 @@ export default async function IndexPage() {
   return (
     <>
       <div className="flex min-h-screen flex-col">
-        <header className="container z-40 bg-background">
-          <div className="flex h-20 items-center justify-between p-6">
+        <header className="max-w-5l container z-40 bg-background">
+          <div className="flex h-20 items-center justify-between">
             <MainNav items={marketingConfig.mainNav} />
             <nav>
               <Link href="/login" className={cn(buttonVariants())}>
@@ -51,17 +51,31 @@ export default async function IndexPage() {
         <main className="flex-1">
           <section className="space-y-6 pb-8 pt-4">
             <div className="container flex max-w-5xl flex-col items-center gap-3 text-center">
-              <h1 className="h1">Turn spreadsheets to realtime APIs</h1>
+              <h1 className="h1">
+                Real-Time APIs in{" "}
+                <span className="text-[#0077b6]">One Click.</span>
+              </h1>
               <p className="max-w-2xl text-muted-foreground sm:text-lg">
                 Turn your Google Sheets into a powerful database that you can
                 use to build web apps, automate workflows, and more.
               </p>
-              <Link
-                href="/login"
-                className={cn(buttonVariants({ size: "lg" }), "mt-2 px-4")}
-              >
-                Try {siteConfig.name} for free
-              </Link>
+              <div className="space-x-4">
+                <Link
+                  href="/login"
+                  className={cn(buttonVariants({ size: "lg" }), "mt-2 px-4")}
+                >
+                  Try {siteConfig.name} for Free
+                </Link>
+                <Link
+                  href="#learn-more"
+                  className={cn(
+                    buttonVariants({ variant: "outline", size: "lg" }),
+                    "mt-2 px-4"
+                  )}
+                >
+                  Learn More
+                </Link>
+              </div>
             </div>
           </section>
           <section className="relative mx-auto my-16 max-w-5xl">
@@ -76,45 +90,66 @@ export default async function IndexPage() {
             </div>
             <div className="absolute -start-10 -top-10 -z-[1] h-full w-[calc(100%+80px)] rounded-md bg-gradient-to-b from-[#03045e]/5 to-background p-px"></div>
           </section>
-          <section className="container max-w-7xl pb-16">
+          <section className="container max-w-6xl py-16" id="learn-more">
             <div className="grid items-center gap-16 md:grid-cols-[1fr_1fr]">
               <Image
-                src="/placeholder.png"
-                alt=""
+                src="/api-creation.png"
+                alt="API creation process"
                 height={360}
                 width={640}
                 className="aspect-video w-full rounded-md bg-muted"
               />
               <div>
-                <h2 className="h2">Built with latest</h2>
-                <p className="mt-3 max-w-2xl text-muted-foreground sm:text-lg">
-                  Turn your Google Sheets into a powerful database that you can
-                  use to build web apps, automate workflows, and more.
+                <h3 className="h3">Instant API Creation</h3>
+                <p className="mt-2 max-w-2xl text-muted-foreground">
+                  Convert any spreadsheet into a fully functional API with just
+                  a few clicks. No coding required.
                 </p>
-                <ul className="mt-6 flex items-center gap-5 text-sm font-medium">
+                <ul className="mt-6 grid grid-cols-3 items-center gap-5 text-sm font-medium">
                   <li className="flex items-center gap-2">
                     <Icons.check className="size-4" />
-                    <span>Quality</span>
+                    <span>No-Code Solution</span>
                   </li>
                   <li className="flex items-center gap-2">
                     <Icons.check className="size-4" />
-                    <span>Multi-purpose</span>
+                    <span>Real-Time Updates</span>
                   </li>
                   <li className="flex items-center gap-2">
                     <Icons.check className="size-4" />
-                    <span>Easy to use</span>
+                    <span>Instant Deployment</span>
                   </li>
                 </ul>
-                <Button className="mt-10">
+                <Button className="mt-8" variant="outline">
                   Get Started <Icons.chevronRight className="ml-2 size-4" />
                 </Button>
               </div>
             </div>
           </section>
-          <section className="container max-w-7xl py-16">
+          <section className="container max-w-6xl py-16">
+            <div className="grid items-center gap-16 md:grid-cols-[1fr_1fr]">
+              <div>
+                <h3 className="h3">Powerful Features</h3>
+                <p className="mt-2 max-w-2xl text-muted-foreground">
+                  Sheetlayer comes packed with features to make your API
+                  development process smooth and efficient.
+                </p>
+                <Button className="mt-8" variant="outline">
+                  Learn More <Icons.chevronRight className="ml-2 size-4" />
+                </Button>
+              </div>
+              <Image
+                src="/features-overview.png"
+                alt="Sheetlayer features overview"
+                height={360}
+                width={640}
+                className="aspect-video w-full rounded-md bg-muted"
+              />
+            </div>
+          </section>
+          <section className="container max-w-6xl py-16">
             <Carousel className="w-full">
-              <div className="mb-8 flex justify-between">
-                <h2 className="h2">Testimonials</h2>
+              <div className="mb-6 flex justify-between">
+                <h3 className="h3">Testimonials</h3>
                 <div className="flex items-center space-x-2">
                   <CarouselPrevious
                     className="static translate-y-0"
@@ -167,44 +202,44 @@ export default async function IndexPage() {
 const testimonials = [
   {
     name: "John Doe",
-    role: "CEO & Founder",
+    role: "Startup Founder",
     avatar: "/images/block/avatar-1.webp",
     content:
-      "Lorem ipsum dolor sit, amet Odio, incidunt.  id ut omnis repellat. Lorem ipsum dolor sit, amet Odio, incidunt. Ratione, ullam? Iusto id ut omnis.",
-  },
-  {
-    name: "Jane Doe",
-    role: "CTO",
-    avatar: "/images/block/avatar-2.webp",
-    content:
-      "Lorem ipsum dolor sit, amet Odio, incidunt. Ratione, ullam? Iusto id ut omnis repellat. Lorem ipsum dolor sit, amet Odio, incidunt. Ratione, ullam? Iusto id ut omnis repellat.",
-  },
-  {
-    name: "John Smith",
-    role: "COO",
-    avatar: "/images/block/avatar-3.webp",
-    content:
-      "Lorem ipsum dolor sit, amet Odio, incidunt. Ratione, ullam? Iusto id ut omnis repellat. Lorem ipsum dolor sit.",
+      "Sheetlayer has revolutionized our development process. We can now prototype and deploy APIs in minutes instead of days.",
   },
   {
     name: "Jane Smith",
+    role: "Product Manager",
+    avatar: "/images/block/avatar-2.webp",
+    content:
+      "The ease of use and real-time updates have made our team significantly more productive. Sheetlayer is a game-changer.",
+  },
+  {
+    name: "Mike Johnson",
+    role: "Data Analyst",
+    avatar: "/images/block/avatar-3.webp",
+    content:
+      "I love how Sheetlayer allows me to quickly turn my data models into functional APIs without any coding knowledge.",
+  },
+  {
+    name: "Emily Brown",
     role: "Tech Lead",
     avatar: "/images/block/avatar-4.webp",
     content:
-      "Lorem ipsum dolor sit, amet Odio, incidunt. Ratione, ullam? Iusto id ut omnis repellat. incidunt. Ratione, ullam? Iusto id ut omnis repellat ratione.",
+      "The automatic documentation and version control features have streamlined our development workflow immensely.",
   },
   {
-    name: "Richard Doe",
-    role: "Designer",
+    name: "Alex Lee",
+    role: "Freelance Developer",
     avatar: "/images/block/avatar-5.webp",
     content:
-      "Lorem ipsum dolor sit, amet Odio, incidunt. Ratione, ullam? Iusto id ut omnis repellat.",
+      "Sheetlayer has become an essential tool in my kit. It's perfect for rapid prototyping and small to medium-sized projects.",
   },
   {
-    name: "Gordon Doe",
-    role: "Developer",
+    name: "Sarah Chen",
+    role: "UX Designer",
     avatar: "/images/block/avatar-6.webp",
     content:
-      "Lorem ipsum dolor sit, amet Odio, incidunt. Ratione, ullam? Iusto id ut omnis repellat. Lorem ipsum dolor sit, amet Odio, incidunt. Ratione, ullam? Iusto id ut omnis repellat.",
+      "The intuitive interface makes it easy for non-technical team members to contribute to API development. It's truly collaborative.",
   },
 ]

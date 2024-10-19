@@ -1,4 +1,5 @@
 import { Icons } from "@/components/icons"
+import { db } from "@/lib/db"
 import { getCurrentUser } from "@/lib/session"
 import Link from "next/link"
 import { redirect } from "next/navigation"
@@ -10,8 +11,6 @@ export default async function SetupLayout({
 }) {
   const user = await getCurrentUser()
 
-  console.log(user)
-
   if (!user) {
     redirect("login")
   }
@@ -19,7 +18,15 @@ export default async function SetupLayout({
   const { setup } = user
 
   if (setup) {
-    return redirect("/")
+    const workspace = await db.workspace.findFirst({
+      where: {
+        userId: user.id,
+      },
+    })
+
+    if (workspace) {
+      redirect(`/${workspace.name}`)
+    }
   }
 
   return (

@@ -3,7 +3,7 @@
 import { useState, useEffect, useCallback } from "react"
 import { useRouter } from "next/navigation"
 import { SetupProvider } from "./setupContext"
-import BusinessName from "./components/steps/business-name"
+import WorkspaceName from "./components/steps/workspace-name"
 import ConnectDatabase from "./components/steps/connect-database"
 import { completeSetup } from "@/actions/user"
 
@@ -12,8 +12,8 @@ interface StepItem {
 }
 
 const steps: StepItem[] = [
-  { label: "Connect Google" },
-  { label: "Business Name" },
+  { label: "Connect Google Sheets" },
+  { label: "Workspace Name" },
 ]
 
 export default function SetupPage() {
@@ -44,7 +44,7 @@ export default function SetupPage() {
       case 0:
         return <ConnectDatabase />
       case 1:
-        return <BusinessName />
+        return <WorkspaceName />
       default:
         return null
     }

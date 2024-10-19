@@ -35,22 +35,25 @@ function convertSpreadsheetDataToJson(spreadsheetData) {
 }
 
 export async function GET(req: Request, { params }) {
-  const { business_name, api_title } = params
+  const { workspace_name, api_title } = params
   try {
-    const business = await db.business.findUnique({
+    const workspace = await db.workspace.findUnique({
       where: {
-        name: business_name,
+        name: workspace_name,
       },
     })
 
-    if (!business) {
-      return NextResponse.json({ error: "Business not found" }, { status: 404 })
+    if (!workspace) {
+      return NextResponse.json(
+        { error: "workspace not found" },
+        { status: 404 }
+      )
     }
 
     const api = await db.api.findFirst({
       where: {
         title: api_title,
-        businessId: business.id,
+        workspaceId: workspace.id,
       },
     })
 
@@ -60,7 +63,7 @@ export async function GET(req: Request, { params }) {
 
     const spreadsheetId = api.spreadsheet
     const accessToken = await refreshAccessTokenIfNeeded(
-      business.userId,
+      workspace.userId,
       "google_sheets"
     )
 
