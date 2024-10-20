@@ -21,6 +21,7 @@ import {
 import { useParams, useRouter } from "next/navigation"
 import { Icons } from "@/components/icons"
 import { Api, Workspace } from "@prisma/client"
+import { useAddWorkspaceModal } from "@/hooks/modals/use-add-workspace-modal"
 
 type PopoverTriggerProps = React.ComponentPropsWithoutRef<typeof PopoverTrigger>
 
@@ -31,6 +32,7 @@ interface workspaceSwitcherProps extends PopoverTriggerProps {
 const capitalize = (str) => (str ? str[0].toUpperCase() + str.slice(1) : "")
 
 const WorkspaceSwitcher = ({ className, items }: workspaceSwitcherProps) => {
+  const addWorkspaceModal = useAddWorkspaceModal()
   const params = useParams()
   const router = useRouter()
 
@@ -47,7 +49,11 @@ const WorkspaceSwitcher = ({ className, items }: workspaceSwitcherProps) => {
 
   const onworkspaceSelect = (workspace) => {
     setOpen(false)
-    router.push(`/${workspace.name}/apis`)
+    router.push(`/${workspace.name}`)
+  }
+
+  const handleAdd = () => {
+    addWorkspaceModal.onOpen()
   }
 
   return (
@@ -110,8 +116,10 @@ const WorkspaceSwitcher = ({ className, items }: workspaceSwitcherProps) => {
           <CommandList>
             <CommandGroup>
               <CommandItem className="cursor-pointer">
-                <Icons.add className="mr-2 size-4" />
-                <span className="text-sm font-medium">Add workspace</span>
+                <div onClick={handleAdd} className="flex items-center">
+                  <Icons.add className="mr-2 size-4" />
+                  <span className="text-sm font-medium">Add workspace</span>
+                </div>
               </CommandItem>
             </CommandGroup>
           </CommandList>
