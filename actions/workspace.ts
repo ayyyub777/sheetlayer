@@ -85,7 +85,6 @@ export const updateWorkspaceName = async (
     await db.workspace.update({
       where: {
         name: values.workspace_name,
-        userId,
       },
       data: {
         name: values.name.toLowerCase(),

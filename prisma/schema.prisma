@@ -62,7 +62,7 @@ model Workspace {
   name   String @unique
   apis   Api[]
 
-  user User @relation(fields: [userId], references: [id])
+  user User @relation(fields: [userId], references: [id], onDelete: Cascade)
 
   @@map(name: "workspaces")
 }
@@ -75,7 +75,7 @@ model Api {
   updatedAt   DateTime @default(now()) @map(name: "updated_at")
   workspaceId String
 
-  Workspace Workspace @relation(fields: [workspaceId], references: [id])
+  Workspace Workspace @relation(fields: [workspaceId], references: [id], onDelete: Cascade)
 
   @@map(name: "Apis")
 }
