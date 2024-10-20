@@ -47,7 +47,7 @@ export function Name() {
             toast(data.error)
           }
           if (data?.success) {
-            redirect(`/${workspace_name}/settings`)
+            redirect(`/${values.name}/settings`)
           }
         })
         .catch((error) => {
