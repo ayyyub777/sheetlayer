@@ -19,7 +19,7 @@ import { Input } from "@/components/ui/input"
 import { workspaceNameSchema } from "@/schemas/workspace"
 import { Button } from "@/components/ui/button"
 import { StatusResponseDataType, StatusResponseType } from "@/types"
-import { useParams } from "next/navigation"
+import { redirect, useParams } from "next/navigation"
 import { updateWorkspaceName } from "@/actions/workspace"
 
 export function Name() {
@@ -45,6 +45,9 @@ export function Name() {
           setSuccess(data?.success)
           if (data?.error) {
             toast(data.error)
+          }
+          if (data?.success) {
+            redirect(`/${workspace_name}/settings`)
           }
         })
         .catch((error) => {
