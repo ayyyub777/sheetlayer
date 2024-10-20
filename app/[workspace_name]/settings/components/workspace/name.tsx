@@ -1,10 +1,10 @@
-import { z } from "zod"
+"use client"
+
 import { useState, useTransition } from "react"
-import { useSetupContext } from "../../setupContext"
-import Controls from "../controls"
+
+import { z } from "zod"
 import { useForm } from "react-hook-form"
 import { zodResolver } from "@hookform/resolvers/zod"
-import { Input } from "@/components/ui/input"
 import {
   Form,
   FormControl,
@@ -12,17 +12,23 @@ import {
   FormItem,
   FormMessage,
 } from "@/components/ui/form"
-import { Label } from "@/components/ui/label"
-import { StatusResponseDataType, StatusResponseType } from "@/types"
-import { addWorkspace } from "@/actions/workspace"
 import { toast } from "@/components/ui/use-toast"
+import { Icons } from "@/components/icons"
+import { Label } from "@/components/ui/label"
+import { Input } from "@/components/ui/input"
 import { workspaceNameSchema } from "@/schemas/workspace"
+import { Button } from "@/components/ui/button"
+import { StatusResponseDataType, StatusResponseType } from "@/types"
+import { useParams } from "next/navigation"
+import { updateWorkspaceName } from "@/actions/workspace"
 
-export default function WorkspaceName() {
-  const { activeStep, setActiveStep } = useSetupContext()
+export function Name() {
+  const params = useParams()
   const [success, setSuccess] = useState<StatusResponseDataType>()
   const [error, setError] = useState<StatusResponseDataType>()
   const [isPending, startTransition] = useTransition()
+
+  const workspace_name = (params?.workspace_name as string) || ""
 
   const form = useForm<z.infer<typeof workspaceNameSchema>>({
     resolver: zodResolver(workspaceNameSchema),
@@ -33,7 +39,7 @@ export default function WorkspaceName() {
 
   async function onSubmit(values: z.infer<typeof workspaceNameSchema>) {
     startTransition(() => {
-      addWorkspace(values)
+      updateWorkspaceName({ ...values, workspace_name })
         .then((data?: StatusResponseType) => {
           setError(data?.error)
           setSuccess(data?.success)
@@ -45,10 +51,6 @@ export default function WorkspaceName() {
           toast({
             description: "An unexpected error occurred",
           })
-          console.error(error)
-        })
-        .finally(() => {
-          setActiveStep(activeStep + 1)
         })
     })
   }
@@ -62,14 +64,26 @@ export default function WorkspaceName() {
           render={({ field }) => (
             <FormItem>
               <Label>Name</Label>
-              <FormControl>
-                <Input placeholder="Workspace name" {...field} />
-              </FormControl>
+              <div className="flex gap-2">
+                <FormControl>
+                  <Input
+                    placeholder="Workspace name"
+                    {...field}
+                    className="w-64"
+                  />
+                </FormControl>
+
+                <Button type="submit" size="sm" disabled={isPending}>
+                  {isPending && (
+                    <Icons.spinner className="mr-2 size-4 animate-spin" />
+                  )}
+                  Change
+                </Button>
+              </div>
               <FormMessage />
             </FormItem>
           )}
         />
-        <Controls isPending={isPending} />
       </form>
     </Form>
   )

@@ -11,7 +11,7 @@ export function DashboardHeader({
 }: DashboardHeaderProps) {
   return (
     <div className="flex items-center justify-between">
-      <div className="grid">
+      <div className="grid gap-1">
         <h1 className="h4 leading-none">{heading}</h1>
         {text && <p className="text-muted-foreground">{text}</p>}
       </div>

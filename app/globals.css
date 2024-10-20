@@ -36,15 +36,15 @@
     font-feature-settings: "rlig" 1, "calt" 1;
   }
   .h1 {
-    @apply text-5xl font-bold tracking-tight md:text-6xl;
+    @apply text-[40px] font-bold leading-none tracking-tight md:text-[48px] lg:text-[56px];
   }
   .h2 {
-    @apply text-4xl font-bold tracking-tight md:text-5xl;
+    @apply text-[32px] font-bold leading-none tracking-tight md:text-[40px] lg:text-[44px];
   }
   .h3 {
-    @apply text-3xl font-bold tracking-tight md:text-4xl;
+    @apply text-[28px] font-bold leading-none tracking-tight md:text-[32px] lg:text-[36px];
   }
   .h4 {
-    @apply text-3xl font-bold tracking-tight;
+    @apply text-[24px] font-bold leading-none tracking-tight md:text-[28px] lg:text-[30px];
   }
 }

@@ -53,3 +53,15 @@ export type StatusResponseType = {
   success?: StatusResponseDataType
   error?: StatusResponseDataType
 }
+
+export type SubscriptionPlan = {
+  name: string
+  description: string
+  priceId: string
+}
+
+export type UserSubscriptionPlan = SubscriptionPlan &
+  Pick<User, "stripeCustomerId" | "stripeSubscriptionId"> & {
+    currentPeriodEnd: number
+    isPro: boolean
+  }

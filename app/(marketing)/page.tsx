@@ -100,36 +100,33 @@ export default async function IndexPage() {
                 className="aspect-video w-full rounded-md bg-muted"
               />
               <div>
-                <h3 className="h3">Instant API Creation</h3>
-                <p className="mt-2 max-w-2xl text-muted-foreground">
+                <h2 className="h2">Instant API Creation</h2>
+                <p className="mt-3 max-w-2xl text-muted-foreground sm:text-lg">
                   Convert any spreadsheet into a fully functional API with just
                   a few clicks. No coding required.
                 </p>
-                <ul className="mt-6 grid grid-cols-3 items-center gap-5 text-sm font-medium">
-                  <li className="flex items-center gap-2">
-                    <Icons.check className="size-4" />
+                <ul className="mt-6 grid items-center gap-4 font-medium">
+                  <li className="flex items-center gap-3">
+                    <Icons.checkCircle className="size-4" />
                     <span>No-Code Solution</span>
                   </li>
-                  <li className="flex items-center gap-2">
-                    <Icons.check className="size-4" />
+                  <li className="flex items-center gap-3">
+                    <Icons.checkCircle className="size-4" />
                     <span>Real-Time Updates</span>
                   </li>
-                  <li className="flex items-center gap-2">
-                    <Icons.check className="size-4" />
+                  <li className="flex items-center gap-3">
+                    <Icons.checkCircle className="size-4" />
                     <span>Instant Deployment</span>
                   </li>
                 </ul>
-                <Button className="mt-8" variant="outline">
-                  Get Started <Icons.chevronRight className="ml-2 size-4" />
-                </Button>
               </div>
             </div>
           </section>
           <section className="container max-w-6xl py-16">
             <div className="grid items-center gap-16 md:grid-cols-[1fr_1fr]">
               <div>
-                <h3 className="h3">Powerful Features</h3>
-                <p className="mt-2 max-w-2xl text-muted-foreground">
+                <h2 className="h2">Powerful Features</h2>
+                <p className="mt-3 max-w-2xl text-muted-foreground sm:text-lg">
                   Sheetlayer comes packed with features to make your API
                   development process smooth and efficient.
                 </p>
@@ -149,7 +146,7 @@ export default async function IndexPage() {
           <section className="container max-w-6xl py-16">
             <Carousel className="w-full">
               <div className="mb-6 flex justify-between">
-                <h3 className="h3">Testimonials</h3>
+                <h2 className="h2">Testimonials</h2>
                 <div className="flex items-center space-x-2">
                   <CarouselPrevious
                     className="static translate-y-0"
