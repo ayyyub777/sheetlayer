@@ -72,7 +72,7 @@ export function Name() {
                   <Input
                     placeholder="Workspace name"
                     {...field}
-                    className="w-64"
+                    className="w-72"
                   />
                 </FormControl>
 

@@ -30,11 +30,13 @@ import {
   type Icon as LucideIcon,
   Table,
   MoreHorizontal,
+  Search,
 } from "lucide-react"
 
 export type Icon = LucideIcon
 
 export const Icons = {
+  search: Search,
   checkCircle: CheckCircle,
   copy: Copy,
   table: Table,
