@@ -55,8 +55,8 @@ export default async function DashboardLayout({
 
   return (
     <div className="flex min-h-screen flex-col space-y-6">
-      <div className="container grid flex-1 gap-6 md:grid-cols-[220px_1fr] md:gap-12">
-        <aside className="flex w-full flex-col py-5 md:w-[220px]">
+      <div className="container grid flex-1 gap-6 px-4 md:grid-cols-[220px_1fr] md:gap-12">
+        <aside className="flex w-full flex-col py-4 md:w-[220px]">
           <div className="mb-8 flex min-h-10 items-center">
             <Icons.logo className="h-[30px] w-auto" />
           </div>
@@ -68,9 +68,9 @@ export default async function DashboardLayout({
             <WorkspaceSwitcher items={workspaces} />
           </div>
         </aside>
-        <main className="flex w-full flex-1 flex-col overflow-hidden pt-5">
+        <main className="flex w-full flex-1 flex-col overflow-hidden pt-4">
           <header className="mb-8 flex h-10 items-center justify-between">
-            <SearchInput placeholder="Search" />
+            <SearchInput />
             <UserAccountNav
               user={{
                 name: user.name,
