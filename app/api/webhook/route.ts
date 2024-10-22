@@ -10,7 +10,7 @@ export async function POST(request: Request) {
     })
   }
 
-  // First, make sure the request is from Lemon Squeezy.
+  // Make sure the request is from Lemon Squeezy.
   const rawBody = await request.text()
   const secret = process.env.LEMONSQUEEZY_WEBHOOK_SECRET
 
