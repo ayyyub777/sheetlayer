@@ -31,6 +31,8 @@ export async function POST(request: Request) {
   if (webhookHasMeta(data)) {
     const webhookEventId = await storeWebhookEvent(data.meta.event_name, data)
 
+    console.log(`Webhook event #${webhookEventId} stored.`)
+
     // Non-blocking call to process the webhook event.
     void processWebhookEvent(webhookEventId)
 

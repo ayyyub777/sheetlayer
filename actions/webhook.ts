@@ -160,5 +160,5 @@ export async function storeWebhookEvent(eventName: string, body) {
     },
   })
 
-  return returnedValue[0].id
+  return returnedValue[0]
 }
