@@ -2,47 +2,22 @@
 
 import crypto from "node:crypto"
 import { getPrice } from "@lemonsqueezy/lemonsqueezy.js"
-import { z } from "zod"
 
 import { db } from "@/lib/db"
-import { configureLemonSqueezy } from "@/lib/lemonsqueezy"
 import { webhookHasData, webhookHasMeta } from "@/lib/typeguards"
 
-interface WebhookEvent {
-  id: number
-  eventName: string
-  body: any
-}
-
-// Validation schema for webhook event body
-const webhookEventSchema = z.object({
-  id: z.number(),
-  eventName: z.string(),
-  body: z.any(),
-})
-
-export async function processWebhookEvent(webhookEvent: WebhookEvent) {
+export async function processWebhookEvent(webhookEventId: number) {
   try {
-    // Validate webhook event
-    if (!webhookEvent) {
-      throw new Error("Webhook event is undefined")
-    }
-
-    // Parse and validate the webhook event
-    const validatedEvent = webhookEventSchema.parse(webhookEvent)
-
-    configureLemonSqueezy()
-
-    // Check if webhook event exists in database
-    const dbwebhookEvent = await db.webhookEvent.findUnique({
+    // Fetch the complete webhook event from the database
+    const webhookEvent = await db.webhookEvent.findUnique({
       where: {
-        id: validatedEvent.id,
+        id: webhookEventId,
       },
     })
 
-    if (!dbwebhookEvent) {
+    if (!webhookEvent) {
       throw new Error(
-        `Webhook event #${validatedEvent.id} not found in the database.`
+        `Webhook event #${webhookEventId} not found in the database.`
       )
     }
 
@@ -53,15 +28,15 @@ export async function processWebhookEvent(webhookEvent: WebhookEvent) {
     }
 
     let processingError = ""
-    const eventBody = validatedEvent.body
+    const eventBody = webhookEvent.body
 
     if (!webhookHasMeta(eventBody)) {
       processingError = "Event body is missing the 'meta' property."
     } else if (webhookHasData(eventBody)) {
-      if (validatedEvent.eventName.startsWith("subscription_payment_")) {
+      if (webhookEvent.eventName.startsWith("subscription_payment_")) {
         // Save subscription invoices; eventBody is a SubscriptionInvoice
         // Not implemented.
-      } else if (validatedEvent.eventName.startsWith("subscription_")) {
+      } else if (webhookEvent.eventName.startsWith("subscription_")) {
         try {
           const attributes = eventBody.data.attributes
           const variantId = attributes.variant_id as string
@@ -77,13 +52,13 @@ export async function processWebhookEvent(webhookEvent: WebhookEvent) {
             throw new Error(`Plan with variantId ${variantId} not found.`)
           }
 
-          // Update the subscription in the database.
+          // Update the subscription in the database
           const priceId = attributes.first_subscription_item?.price_id
           if (!priceId) {
             throw new Error("Price ID is missing from subscription item")
           }
 
-          // Get the price data from Lemon Squeezy.
+          // Get the price data from Lemon Squeezy
           const priceData = await getPrice(priceId)
           if (priceData.error) {
             throw new Error(
@@ -128,13 +103,13 @@ export async function processWebhookEvent(webhookEvent: WebhookEvent) {
           processingError =
             error instanceof Error
               ? error.message
-              : `Failed to process subscription webhook event ${validatedEvent.id}`
+              : `Failed to process subscription webhook event ${webhookEventId}`
           console.error(error)
         }
-      } else if (validatedEvent.eventName.startsWith("order_")) {
+      } else if (webhookEvent.eventName.startsWith("order_")) {
         // Save orders; eventBody is a "Order"
         /* Not implemented */
-      } else if (validatedEvent.eventName.startsWith("license_")) {
+      } else if (webhookEvent.eventName.startsWith("license_")) {
         // Save license keys; eventBody is a "License key"
         /* Not implemented */
       }
@@ -143,7 +118,7 @@ export async function processWebhookEvent(webhookEvent: WebhookEvent) {
     // Update the webhook event in the database
     await db.webhookEvent.update({
       where: {
-        id: validatedEvent.id,
+        id: webhookEventId,
       },
       data: {
         processed: true,
@@ -152,6 +127,19 @@ export async function processWebhookEvent(webhookEvent: WebhookEvent) {
     })
   } catch (error) {
     console.error("Error processing webhook event:", error)
+
+    // Update the webhook event with the error
+    await db.webhookEvent.update({
+      where: {
+        id: webhookEventId,
+      },
+      data: {
+        processed: true,
+        processingError:
+          error instanceof Error ? error.message : "Unknown error occurred",
+      },
+    })
+
     throw error
   }
 }
@@ -172,5 +160,5 @@ export async function storeWebhookEvent(eventName: string, body) {
     },
   })
 
-  return returnedValue[0]
+  return returnedValue[0].id
 }
