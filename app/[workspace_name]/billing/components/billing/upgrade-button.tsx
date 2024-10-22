@@ -15,7 +15,7 @@ export function UpgradeButton(props: {
   currentPlan?: Plan
   embed?: boolean
 }) {
-  const { plan, currentPlan, embed = true } = props
+  const { plan, currentPlan, embed = false } = props
   const router = useRouter()
   const [loading, setLoading] = useState(false)
   const isCurrent = plan.id === currentPlan?.id
@@ -23,32 +23,28 @@ export function UpgradeButton(props: {
   const label = isCurrent ? "Current plan" : "Upgrade plan"
 
   useEffect(() => {
-    if (
-      typeof window !== "undefined" &&
-      typeof window.createLemonSqueezy === "function"
-    ) {
+    if (typeof window.createLemonSqueezy === "function") {
       window.createLemonSqueezy()
     }
   }, [])
 
   const handleCheckout = async () => {
-    let checkoutUrl: string | undefined
-    setLoading(true)
+    let checkoutUrl: string | undefined = ""
 
     try {
+      setLoading(true)
       checkoutUrl = await getCheckoutURL(plan.variantId, embed)
-      if (embed) {
-        checkoutUrl && window.LemonSqueezy.Url.Open(checkoutUrl)
-      } else {
-        router.push(checkoutUrl ?? "/")
-      }
     } catch (error) {
       toast({
         description: "Error creating a checkout. Please try again later.",
       })
     } finally {
-      setLoading(false)
+      embed && setLoading(false)
     }
+
+    embed
+      ? checkoutUrl && LemonSqueezy.Url.Open(checkoutUrl)
+      : router.push(checkoutUrl ?? "/")
   }
 
   return (

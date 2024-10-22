@@ -1,5 +1,4 @@
 import { Inter as FontSans } from "next/font/google"
-import Script from "next/script"
 
 import "./globals.css"
 import { cn } from "@/lib/utils"
@@ -21,10 +20,7 @@ export default function RootLayout({ children }: RootLayoutProps) {
   return (
     <html lang="en" suppressHydrationWarning>
       <head>
-        <Script
-          src="https://cdn.lemonsqueezy.com/lemon.js"
-          strategy="lazyOnload"
-        />
+        <script src="https://app.lemonsqueezy.com/js/lemon.js" defer></script>
       </head>
       <body
         className={cn(
