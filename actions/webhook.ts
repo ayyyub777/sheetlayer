@@ -8,8 +8,7 @@ import { webhookHasData, webhookHasMeta } from "@/lib/typeguards"
 
 export async function processWebhookEvent(webhookEventId: number) {
   try {
-    // Fetch the complete webhook event from the database
-    const webhookEvent = await db.webhookEvent.findUnique({
+    const webhookEvent = await db.webhookEvent.findFirst({
       where: {
         id: webhookEventId,
       },
@@ -41,7 +40,6 @@ export async function processWebhookEvent(webhookEventId: number) {
           const attributes = eventBody.data.attributes
           const variantId = attributes.variant_id as string
 
-          // Fetch the plan by variantId
           const plan = await db.plan.findUnique({
             where: {
               variantId: parseInt(variantId, 10),
@@ -52,13 +50,11 @@ export async function processWebhookEvent(webhookEventId: number) {
             throw new Error(`Plan with variantId ${variantId} not found.`)
           }
 
-          // Update the subscription in the database
           const priceId = attributes.first_subscription_item?.price_id
           if (!priceId) {
             throw new Error("Price ID is missing from subscription item")
           }
 
-          // Get the price data from Lemon Squeezy
           const priceData = await getPrice(priceId)
           if (priceData.error) {
             throw new Error(
@@ -115,7 +111,6 @@ export async function processWebhookEvent(webhookEventId: number) {
       }
     }
 
-    // Update the webhook event in the database
     await db.webhookEvent.update({
       where: {
         id: webhookEventId,
@@ -127,8 +122,6 @@ export async function processWebhookEvent(webhookEventId: number) {
     })
   } catch (error) {
     console.error("Error processing webhook event:", error)
-
-    // Update the webhook event with the error
     await db.webhookEvent.update({
       where: {
         id: webhookEventId,
