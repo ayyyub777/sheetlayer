@@ -55,7 +55,7 @@ export default async function DashboardLayout({
 
   return (
     <div className="flex min-h-screen flex-col space-y-6">
-      <div className="container grid flex-1 gap-6 px-4 md:grid-cols-[220px_1fr] md:gap-12">
+      <div className="container grid flex-1 gap-6 px-4 md:grid-cols-[220px_1fr] md:gap-10">
         <aside className="flex w-full flex-col py-4 md:w-[220px]">
           <div className="mb-8 flex min-h-10 items-center">
             <Icons.logo className="h-[30px] w-auto" />

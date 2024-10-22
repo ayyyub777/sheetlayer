@@ -27,9 +27,10 @@ model User {
   createdAt     DateTime  @default(now()) @map(name: "created_at")
   updatedAt     DateTime  @default(now()) @map(name: "updated_at")
 
-  sessions    Session[]
-  Workspace   Workspace[]
-  connections Connection[]
+  sessions     Session[]
+  Workspace    Workspace[]
+  connections  Connection[]
+  Subscription Subscription[]
 
   @@map(name: "users")
 }
@@ -78,4 +79,55 @@ model Api {
   Workspace Workspace @relation(fields: [workspaceId], references: [id], onDelete: Cascade)
 
   @@map(name: "Apis")
+}
+
+model Plan {
+  id                 Int            @id @default(autoincrement())
+  productId          Int
+  productName        String?
+  variantId          Int            @unique
+  name               String
+  description        String?
+  price              String
+  isUsageBased       Boolean        @default(false)
+  interval           String?
+  intervalCount      Int?
+  trialInterval      String?
+  trialIntervalCount Int?
+  sort               Int?
+  Subscription       Subscription[]
+
+  @@map("plan")
+}
+
+model WebhookEvent {
+  id              Int      @id @default(autoincrement())
+  createdAt       DateTime @default(now())
+  eventName       String
+  processed       Boolean  @default(false)
+  body            Json
+  processingError String?
+}
+
+model Subscription {
+  id                 Int     @id @default(autoincrement())
+  lemonSqueezyId     String  @unique
+  orderId            Int
+  name               String
+  email              String
+  status             String
+  statusFormatted    String
+  renewsAt           String?
+  endsAt             String?
+  trialEndsAt        String?
+  price              String
+  isUsageBased       Boolean @default(false)
+  isPaused           Boolean @default(false)
+  subscriptionItemId Int?    @default(autoincrement())
+  userId             String
+  planId             Int
+  user               User    @relation(fields: [userId], references: [id])
+  plan               Plan    @relation(fields: [planId], references: [id])
+
+  @@map("subscription")
 }

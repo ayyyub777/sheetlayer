@@ -1,43 +1,33 @@
-import { redirect } from "next/navigation"
-import { getCurrentUser } from "@/lib/session"
-import { getUserSubscriptionPlan } from "@/lib/subscription"
-import { BillingForm } from "@/app/[workspace_name]/billing/components/billing-form"
+// @ts-nocheck
+
+import { Suspense } from "react"
+
 import { DashboardHeader } from "@/components/header"
 import { DashboardShell } from "@/components/shell"
+
+import { Plans } from "./components/billing/plans"
+import { Subscriptions } from "./components/subscription/subscriptions"
 
 export const metadata = {
   title: "Billing",
 }
 
 export default async function BillingPage() {
-  const user = await getCurrentUser()
-
-  if (!user) {
-    redirect("/login")
-  }
-
-  const subscriptionPlan = await getUserSubscriptionPlan(user.id)
-
-  let isCanceled = false
-  // if (subscriptionPlan.isPro && subscriptionPlan.stripeSubscriptionId) {
-  //   const stripePlan = await stripe.subscriptions.retrieve(
-  //     subscriptionPlan.stripeSubscriptionId
-  //   )
-  //   isCanceled = stripePlan.cancel_at_period_end
-  // }
-
   return (
     <DashboardShell>
       <DashboardHeader
         heading="Billing"
         text="Manage billing and your subscription plan."
       />
-      <BillingForm
-        subscriptionPlan={{
-          ...subscriptionPlan,
-          isCanceled,
-        }}
-      />
+      <div>
+        <Suspense fallback={<></>}>
+          <Subscriptions />
+        </Suspense>
+
+        <Suspense fallback={<></>}>
+          <Plans />
+        </Suspense>
+      </div>
     </DashboardShell>
   )
 }

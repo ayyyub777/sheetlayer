@@ -56,7 +56,6 @@ export type StatusResponseType = {
 
 export type SubscriptionPlan = {
   name: string
-  description: string
   priceId: string
 }
 
