@@ -1,6 +1,6 @@
 import { formatPrice } from "@/lib/utils"
 
-export function Price({
+export function SubscriptionPrice({
   endsAt,
   price,
   interval,
@@ -22,7 +22,9 @@ export function Price({
   }
 
   const formattedIntervalCount =
-    intervalCount && intervalCount !== 1 ? `every ${intervalCount} ` : "every"
+    intervalCount && intervalCount !== 1 ? `per ${intervalCount} ` : "per"
 
-  return <p>{`${formattedPrice} ${formattedIntervalCount} ${interval}`}</p>
+  return (
+    <p className="text-sm text-muted-foreground">{`${formattedPrice} ${formattedIntervalCount} ${interval}`}</p>
+  )
 }

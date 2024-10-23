@@ -1,32 +1,33 @@
 // @ts-nocheck
 
 import { Suspense } from "react"
+import { getPlans } from "@/actions/plan"
+import { getUserSubscriptions } from "@/actions/subscription"
 
 import { DashboardHeader } from "@/components/header"
 import { DashboardShell } from "@/components/shell"
 
-import { Plans } from "./components/billing/plans"
-import { Subscriptions } from "./components/subscription/subscriptions"
+import Subscriptions from "./components/subscriptions"
 
 export const metadata = {
   title: "Billing",
 }
 
 export default async function BillingPage() {
+  const userSubscriptions = await getUserSubscriptions()
+  const allPlans = await getPlans()
+
   return (
     <DashboardShell>
       <DashboardHeader
         heading="Billing"
         text="Manage billing and your subscription plan."
       />
-      <div>
-        <Suspense fallback={<></>}>
-          <Subscriptions />
-        </Suspense>
-
-        <Suspense fallback={<></>}>
-          <Plans />
-        </Suspense>
+      <div className="space-y-6">
+        <Subscriptions
+          userSubscriptions={userSubscriptions}
+          allPlans={allPlans}
+        />
       </div>
     </DashboardShell>
   )

@@ -1,16 +1,21 @@
 "use server"
 
+import { revalidatePath } from "next/cache"
 import {
   createCheckout,
   getProduct,
   listPrices,
   listProducts,
+  updateSubscription,
 } from "@lemonsqueezy/lemonsqueezy.js"
+import { Subscription } from "@prisma/client"
 import { getServerSession } from "next-auth"
 
 import { authOptions } from "@/lib/auth"
 import { db } from "@/lib/db"
 import { configureLemonSqueezy } from "@/lib/lemonsqueezy"
+
+import { getUserSubscriptionById } from "./subscription"
 
 export async function syncPlans() {
   configureLemonSqueezy()
@@ -95,6 +100,16 @@ export async function syncPlans() {
   return productVariants
 }
 
+export async function getPlans() {
+  const plans = await db.plan.findMany()
+
+  if (!plans.length) {
+    await syncPlans()
+  }
+
+  return plans
+}
+
 export async function getCheckoutURL(variantId: number, embed = false) {
   configureLemonSqueezy()
 
@@ -124,7 +139,7 @@ export async function getCheckoutURL(variantId: number, embed = false) {
       },
       productOptions: {
         enabledVariants: [variantId],
-        redirectUrl: `${process.env.NEXT_PUBLIC_APP_URL}/billing/`,
+        redirectUrl: `${process.env.NEXT_PUBLIC_APP_URL}`,
         receiptButtonText: "Go to Dashboard",
         receiptThankYouNote: "Thank you for your purchase!",
       },
@@ -132,4 +147,47 @@ export async function getCheckoutURL(variantId: number, embed = false) {
   )
 
   return checkout.data?.data.attributes.url
+}
+
+export async function changePlan(currentPlanId: number, newPlanId: number) {
+  configureLemonSqueezy()
+
+  const subscription = (await getUserSubscriptionById(
+    currentPlanId.toString()
+  )) as Subscription
+
+  if (!subscription) {
+    throw new Error(`No subscription with plan id #${currentPlanId} was found.`)
+  }
+
+  const newPlan = await db.plan.findUniqueOrThrow({
+    where: {
+      id: newPlanId,
+    },
+  })
+
+  const updatedSub = await updateSubscription(subscription.lemonSqueezyId, {
+    variantId: newPlan.variantId,
+  })
+
+  try {
+    await db.subscription.update({
+      where: {
+        lemonSqueezyId: subscription.lemonSqueezyId,
+      },
+      data: {
+        planId: newPlanId,
+        price: newPlan.price,
+        endsAt: updatedSub.data?.data.attributes.ends_at,
+      },
+    })
+  } catch (error) {
+    throw new Error(
+      `Failed to update Subscription #${subscription.lemonSqueezyId} in the database.`
+    )
+  }
+
+  revalidatePath("/")
+
+  return updatedSub
 }

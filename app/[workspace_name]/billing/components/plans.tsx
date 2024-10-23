@@ -1,10 +1,6 @@
-import { redirect } from "next/navigation"
-import { syncPlans } from "@/actions/plan"
+import { Plan } from "@prisma/client"
 
-import { db } from "@/lib/db"
-import { getCurrentUser } from "@/lib/session"
-import { cn } from "@/lib/utils"
-import { buttonVariants } from "@/components/ui/button"
+import { Button } from "@/components/ui/button"
 import {
   Card,
   CardContent,
@@ -16,26 +12,21 @@ import {
 
 import { UpgradeButton } from "./upgrade-button"
 
-export async function Plans() {
-  const user = await getCurrentUser()
-
-  if (!user) {
-    redirect("/login")
-  }
-
-  let allPlans = await db.plan.findMany()
-
-  if (!allPlans.length) {
-    allPlans = await syncPlans()
-  }
-
-  if (!allPlans.length) {
+export default function Plans({
+  allPlans,
+  currentPlan,
+  isChangingPlans = false,
+}: {
+  allPlans: Plan[]
+  currentPlan?: Plan
+  isChangingPlans?: boolean
+}) {
+  if (!allPlans) {
     return <p>No plans available.</p>
-  }
-  return (
-    <>
-      {allPlans.map((plan, index) => {
-        return (
+  } else {
+    return (
+      <>
+        {allPlans.map((plan, index) => (
           <Card key={`plan-${index}`}>
             <CardHeader>
               <CardTitle>{plan.productName}</CardTitle>
@@ -46,11 +37,17 @@ export async function Plans() {
               <p className="text-sm">per {plan.interval}</p>
             </CardContent>
             <CardFooter className="flex flex-col items-start space-y-2 md:flex-row md:justify-between md:space-x-0">
-              <UpgradeButton plan={plan} />
+              {currentPlan?.id === plan.id ? (
+                <Button variant="secondary" size="sm">
+                  Current plan
+                </Button>
+              ) : (
+                <UpgradeButton plan={plan} isChangingPlans={isChangingPlans} />
+              )}
             </CardFooter>
           </Card>
-        )
-      })}
-    </>
-  )
+        ))}
+      </>
+    )
+  }
 }
