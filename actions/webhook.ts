@@ -41,19 +41,17 @@ export async function processWebhookEvent(webhookEventId: number) {
           })
 
           if (!plan) {
-            throw new Error(`Plan with variantId ${variantId} not found.`)
+            processingError = `Plan with variantId ${variantId} not found.`
           }
 
           const priceId = attributes.first_subscription_item?.price_id
           if (!priceId) {
-            throw new Error("Price ID is missing from subscription item")
+            processingError = `Failed to get the price data for the subscription ${eventBody.data.id}.`
           }
 
           const priceData = await getPrice(priceId)
           if (priceData.error) {
-            throw new Error(
-              `Failed to get the price data for the subscription ${eventBody.data.id}.`
-            )
+            processingError = `Failed to get the price data for the subscription ${eventBody.data.id}.`
           }
 
           const isUsageBased =
@@ -63,7 +61,7 @@ export async function processWebhookEvent(webhookEventId: number) {
             : priceData.data?.data.attributes.unit_price
 
           if (!price) {
-            throw new Error("Failed to determine price for subscription")
+            processingError = `Failed to determine price for subscription ${eventBody.data.id}.`
           }
 
           const updateData = {
@@ -76,7 +74,7 @@ export async function processWebhookEvent(webhookEventId: number) {
             renewsAt: attributes.renews_at as string,
             endsAt: attributes.ends_at as string,
             trialEndsAt: attributes.trial_ends_at as string,
-            price: price.toString(),
+            price: price?.toString() || "0.00",
             isPaused: false,
             subscriptionItemId: attributes.first_subscription_item.id,
             isUsageBased: attributes.first_subscription_item.is_usage_based,
