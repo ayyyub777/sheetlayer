@@ -79,7 +79,7 @@ export async function processWebhookEvent(webhookEventId: number) {
             subscriptionItemId: attributes.first_subscription_item.id,
             isUsageBased: attributes.first_subscription_item.is_usage_based,
             userId: eventBody.meta.custom_data.user_id,
-            planId: plan.id,
+            planId: plan?.id ?? 0,
           }
 
           await db.subscription.upsert({
