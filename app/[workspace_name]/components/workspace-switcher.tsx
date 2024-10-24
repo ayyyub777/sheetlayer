@@ -1,8 +1,11 @@
 "use client"
 
 import * as React from "react"
+import { useParams, useRouter } from "next/navigation"
+import { Api, Workspace } from "@prisma/client"
 
 import { cn } from "@/lib/utils"
+import { useAddWorkspaceModal } from "@/hooks/modals/use-add-workspace-modal"
 import { Button } from "@/components/ui/button"
 import {
   Command,
@@ -18,10 +21,7 @@ import {
   PopoverContent,
   PopoverTrigger,
 } from "@/components/ui/popover"
-import { useParams, useRouter } from "next/navigation"
 import { Icons } from "@/components/icons"
-import { Api, Workspace } from "@prisma/client"
-import { useAddWorkspaceModal } from "@/hooks/modals/use-add-workspace-modal"
 
 type PopoverTriggerProps = React.ComponentPropsWithoutRef<typeof PopoverTrigger>
 
@@ -72,7 +72,7 @@ const WorkspaceSwitcher = ({ className, items }: workspaceSwitcherProps) => {
           <div className="ml-1 flex flex-col text-left">
             <span>{capitalize(currentworkspace?.name)}</span>
             <span className="text-xs font-normal leading-none text-muted-foreground">
-              {currentworkspace?.apis || 0} APIs
+              {currentworkspace?.apis || 0} Projects
             </span>
           </div>
           <Icons.chevronsUpDown className="ml-auto size-4 shrink-0 opacity-50" />
@@ -97,7 +97,7 @@ const WorkspaceSwitcher = ({ className, items }: workspaceSwitcherProps) => {
                   <div className="ml-1 flex flex-col text-left">
                     <span>{capitalize(workspace.name)}</span>
                     <span className="text-xs font-normal leading-none text-muted-foreground">
-                      {workspace?.apis || 0} APIs
+                      {workspace?.apis || 0} Projects
                     </span>
                   </div>
                   <Icons.check

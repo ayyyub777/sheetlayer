@@ -46,8 +46,8 @@ export default function ApiList({
         <div className="divide-y divide-border rounded-md border">
           {apis.map((api, index) => (
             <div key={index} className="flex justify-between items-center">
-              <div className="flex flex-col space-y-1.5 p-5">
-                <div className="flex items-center gap-3">
+              <div className="flex flex-col space-y-1.5 px-5 py-4">
+                <div className="flex items-center gap-2">
                   <h1 className="text-lg font-semibold leading-none first-letter:uppercase">
                     {api.title}
                   </h1>

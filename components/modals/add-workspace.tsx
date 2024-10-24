@@ -1,19 +1,20 @@
 "use client"
 
-import * as z from "zod"
-import { zodResolver } from "@hookform/resolvers/zod"
 import { useState, useTransition } from "react"
-import { useForm } from "react-hook-form"
-
+import { useRouter } from "next/navigation"
+import { addWorkspace } from "@/actions/workspace"
 import { StatusResponseDataType, StatusResponseType } from "@/types"
-import { Form, FormControl, FormField, FormItem, FormMessage } from "../ui/form"
+import { zodResolver } from "@hookform/resolvers/zod"
+import { useForm } from "react-hook-form"
+import * as z from "zod"
+
 import { useAddWorkspaceModal } from "@/hooks/modals/use-add-workspace-modal"
+
+import { Form, FormControl, FormField, FormItem, FormMessage } from "../ui/form"
 import { Input } from "../ui/input"
 import { Label } from "../ui/label"
 import { Modal } from "../ui/modal"
 import { toast } from "../ui/use-toast"
-import { addWorkspace } from "@/actions/workspace"
-import { useRouter } from "next/navigation"
 
 const workspaceNameSchema = z.object({
   name: z.string().nonempty("Workspace name is required"),
@@ -60,12 +61,12 @@ export default function AddWorkspace() {
 
   return (
     <Modal
-      title="Add API"
-      description="Add a new API to your collection."
+      title="Add workspace"
+      description="Add a new workspace to your collection."
       isOpen={isOpen}
       onClose={onClose}
       action={{
-        label: "Add API",
+        label: "Add workspace",
         disabled: isPending,
         onClick: form.handleSubmit(onSubmit),
         isPending,

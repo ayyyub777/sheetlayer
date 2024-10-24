@@ -54,7 +54,7 @@ export default function Subscriptions({
         return (
           <Card key={index} className="flex items-center justify-between">
             <CardHeader>
-              <CardTitle className="flex items-center gap-3">
+              <CardTitle className="flex items-center gap-2">
                 <h1>Current plan ({plan.productName}) </h1>
                 <SubscriptionStatus
                   statusFormatted={subscription.statusFormatted}

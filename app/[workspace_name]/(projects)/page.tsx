@@ -2,10 +2,11 @@ import { getApis } from "@/actions/api"
 
 import { DashboardHeader } from "@/components/header"
 import { DashboardShell } from "@/components/shell"
-import { ApiCreateButton } from "@/app/[workspace_name]/(apis)/components/api-create-button"
-import ApiList from "@/app/[workspace_name]/(apis)/components/api-list"
 
-export default async function ApisPage({
+import { ApiCreateButton } from "./components/api-create-button"
+import ApiList from "./components/api-list"
+
+export default async function ProjectsPage({
   params,
 }: {
   params: { workspace_name: string }
@@ -16,7 +17,7 @@ export default async function ApisPage({
 
   return (
     <DashboardShell>
-      <DashboardHeader heading="APIs" text="Create and manage APIs.">
+      <DashboardHeader heading="Projects" text="Create and manage APIs.">
         <ApiCreateButton size="sm" />
       </DashboardHeader>
       <ApiList defaultApis={apis} workspaceName={workspace_name} />

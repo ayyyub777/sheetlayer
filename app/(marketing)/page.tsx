@@ -91,7 +91,7 @@ export default async function IndexPage() {
             </div>
             <div className="absolute -start-10 -top-10 -z-[1] h-full w-[calc(100%+80px)] rounded-md bg-gradient-to-b from-[#03045e]/5 to-background p-px"></div>
           </section>
-          <section className="container max-w-6xl py-16" id="learn-more">
+          {/* <section className="container max-w-6xl py-16" id="learn-more">
             <div className="grid items-center gap-16 md:grid-cols-[1fr_1fr]">
               <Image
                 src="/api-creation.png"
@@ -190,7 +190,7 @@ export default async function IndexPage() {
                 ))}
               </CarouselContent>
             </Carousel>
-          </section>
+          </section> */}
         </main>
       </div>
     </>
