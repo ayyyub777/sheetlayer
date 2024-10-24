@@ -41,12 +41,12 @@ export async function syncPlans() {
   if (allVariants) {
     for (const v of allVariants) {
       const variant = v.attributes as any
-      if (
-        variant.status === "draft" ||
-        (allVariants.length !== 1 && variant.status === "pending")
-      ) {
-        continue
-      }
+      // if (
+      //   variant.status === "draft" ||
+      //   (allVariants.length !== 1 && variant.status === "pending")
+      // ) {
+      //   continue
+      // }
 
       const productName =
         (await getProduct(variant.product_id)).data?.data.attributes.name ?? ""

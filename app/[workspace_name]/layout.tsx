@@ -1,13 +1,14 @@
 import { notFound, redirect } from "next/navigation"
 
 import { dashboardConfig } from "@/config/dashboard"
+import { db } from "@/lib/db"
 import { getCurrentUser } from "@/lib/session"
+import { Icons } from "@/components/icons"
 import { DashboardNav } from "@/app/[workspace_name]/components/nav"
 import { UserAccountNav } from "@/app/[workspace_name]/components/user-account-nav"
-import { db } from "@/lib/db"
-import WorkspaceSwitcher from "./components/workspace-switcher"
+
 import SearchInput from "./components/search-input"
-import { Icons } from "@/components/icons"
+import WorkspaceSwitcher from "./components/workspace-switcher"
 
 interface DashboardLayoutProps {
   children?: React.ReactNode

@@ -1,5 +1,6 @@
 import { Plan } from "@prisma/client"
 
+import { getPlanByName, plans } from "@/config/plans"
 import { Button } from "@/components/ui/button"
 import {
   Card,
@@ -12,6 +13,35 @@ import {
 
 import { UpgradeButton } from "./upgrade-button"
 
+const PlanFeatures = ({ productName }: { productName: string | null }) => {
+  const planDetails = plans[productName || ""]
+
+  if (!planDetails) return null
+
+  return (
+    <ul className="text-sm mt-4 space-y-2">
+      {planDetails.features.map((feature, index) => (
+        <li key={`feature-${index}`}>
+          <span className="font-semibold">{feature.name}</span>: {feature.value}
+        </li>
+      ))}
+    </ul>
+  )
+}
+
+const PlanPrice = ({
+  price,
+  interval,
+}: {
+  price: number
+  interval: string | null
+}) => (
+  <div className="flex items-baseline gap-2">
+    <h4 className="h4">${(price / 100).toFixed(2)}</h4>
+    <p className="text-sm">per {interval}</p>
+  </div>
+)
+
 export default function Plans({
   allPlans,
   currentPlan,
@@ -21,33 +51,37 @@ export default function Plans({
   currentPlan?: Plan
   isChangingPlans?: boolean
 }) {
-  if (!allPlans) {
+  if (!allPlans || allPlans.length === 0) {
     return <p>No plans available.</p>
-  } else {
-    return (
-      <>
-        {allPlans.map((plan, index) => (
-          <Card key={`plan-${index}`}>
-            <CardHeader>
-              <CardTitle>{plan.productName}</CardTitle>
-              <CardDescription>{plan.description}</CardDescription>
-            </CardHeader>
-            <CardContent className="flex items-baseline gap-2">
-              <h4 className="h4">${(Number(plan.price) / 100).toFixed(2)}</h4>
-              <p className="text-sm">per {plan.interval}</p>
-            </CardContent>
-            <CardFooter className="flex flex-col items-start space-y-2 md:flex-row md:justify-between md:space-x-0">
-              {currentPlan?.id === plan.id ? (
-                <Button variant="secondary" size="sm">
-                  Current plan
-                </Button>
-              ) : (
-                <UpgradeButton plan={plan} isChangingPlans={isChangingPlans} />
-              )}
-            </CardFooter>
-          </Card>
-        ))}
-      </>
-    )
   }
+
+  return (
+    <>
+      {allPlans.map((plan) => (
+        <Card key={plan.id}>
+          <CardHeader>
+            <CardTitle>{plan.productName}</CardTitle>
+            <CardDescription>
+              {getPlanByName(plan.productName)?.description}
+            </CardDescription>
+          </CardHeader>
+
+          <CardContent>
+            <PlanPrice price={Number(plan.price)} interval={plan.interval} />
+            <PlanFeatures productName={plan.productName} />
+          </CardContent>
+
+          <CardFooter>
+            {currentPlan?.id === plan.id ? (
+              <Button variant="secondary" size="sm">
+                Current plan
+              </Button>
+            ) : (
+              <UpgradeButton plan={plan} isChangingPlans={isChangingPlans} />
+            )}
+          </CardFooter>
+        </Card>
+      ))}
+    </>
+  )
 }
