@@ -1,20 +1,22 @@
 "use client"
 
 import { useEffect, useState } from "react"
-import { Api } from "@prisma/client"
-import { EmptyPlaceholder } from "@/components/empty-placeholder"
+import Link from "next/link"
 import { getApis } from "@/actions/api"
+import { Api } from "@prisma/client"
+
 import { useAddApiModal } from "@/hooks/modals/use-add-api-modal"
 import { useDeleteApiModal } from "@/hooks/modals/use-delete-api-modal"
-import Link from "next/link"
 import { Button } from "@/components/ui/button"
-import { ApiOperations } from "./api-operations"
 import {
   Popover,
   PopoverContent,
   PopoverTrigger,
 } from "@/components/ui/popover"
+import { EmptyPlaceholder } from "@/components/empty-placeholder"
 import { Icons } from "@/components/icons"
+
+import { ApiOperations } from "./api-operations"
 
 export default function ApiList({
   defaultApis,
@@ -42,9 +44,9 @@ export default function ApiList({
       {apis?.length ? (
         <div className="divide-y divide-border rounded-md border">
           {apis.map((api, index) => (
-            <div key={index} className="flex items-center justify-between p-4">
-              <div className="flex h-9 flex-col justify-center gap-1">
-                <p className="font-medium leading-none first-letter:uppercase">
+            <div key={index} className="flex justify-between items-center">
+              <div className="flex flex-col space-y-1.5 p-5">
+                <p className="font-semibold leading-none first-letter:uppercase">
                   {api.title}
                 </p>
                 <div
@@ -71,7 +73,7 @@ export default function ApiList({
                   </Popover>
                 </div>
               </div>
-              <div className="flex gap-2">
+              <div className="flex gap-2 mr-5">
                 <Link
                   href={`https://docs.google.com/spreadsheets/d/${api.spreadsheet}`}
                   target="_blank"

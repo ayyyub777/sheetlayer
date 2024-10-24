@@ -1,11 +1,13 @@
 import React, { useEffect, useState } from "react"
 import Image from "next/image"
 import Link from "next/link"
+
 import { Button } from "@/components/ui/button"
-import { useSetupContext } from "../../setupContext"
-import Controls from "../controls"
 import { Card } from "@/components/ui/card"
 import { Icons } from "@/components/icons"
+
+import { useSetupContext } from "../../setupContext"
+import Controls from "../controls"
 
 type DatabaseType = "google_sheets" | "notion" | "airtable"
 
@@ -102,8 +104,8 @@ const DatabaseCard: React.FC<DatabaseCardProps> = ({
 }) => (
   <Card className="mb-4 flex items-center justify-between p-3">
     <div className="flex items-center gap-4">
-      <div className="flex size-12 items-center justify-center rounded-md border">
-        <Image src={config.icon} alt={config.name} width={28} height={28} />
+      <div className="flex size-14 items-center justify-center rounded-md border">
+        <Image src={config.icon} alt={config.name} width={30} height={30} />
       </div>
       <div>
         <p className="text-sm font-medium leading-none">{config.name}</p>
@@ -113,11 +115,11 @@ const DatabaseCard: React.FC<DatabaseCardProps> = ({
       </div>
     </div>
     <div className="flex items-center gap-4">
-      <Link href="/" className="flex items-center gap-2 text-sm font-medium">
+      {/* <Link href="/" className="flex items-center gap-2 text-sm font-medium">
         Learn more
         <Icons.chevronDown className="size-4" />
       </Link>
-      <div className="h-5 w-[0.5px] bg-border" />
+      <div className="h-5 w-[0.5px] bg-border" /> */}
       <ConnectButton
         isConnected={isConnected}
         isPending={isPending}
@@ -140,19 +142,20 @@ const ConnectButton: React.FC<ConnectButtonProps> = ({
 }) => {
   if (isConnected) {
     return (
-      <Button
-        type="button"
-        size="sm"
-        className="bg-green-600 hover:bg-green-600"
-      >
-        <Icons.checkCircle className="mr-2 size-4" />
-        Done
+      <Button type="button" size="sm" variant="secondary" className="mr-[10px]">
+        Connected
       </Button>
     )
   }
 
   return (
-    <Button type="button" size="sm" onClick={onClick} disabled={isPending}>
+    <Button
+      type="button"
+      size="sm"
+      onClick={onClick}
+      disabled={isPending}
+      className="mr-[10px]"
+    >
       {isPending ? (
         <Icons.spinner className="mr-2 size-4 animate-spin" />
       ) : (
