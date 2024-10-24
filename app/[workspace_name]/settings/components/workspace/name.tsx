@@ -1,10 +1,15 @@
 "use client"
 
 import { useState, useTransition } from "react"
-
-import { z } from "zod"
-import { useForm } from "react-hook-form"
+import { useParams, useRouter } from "next/navigation"
+import { updateWorkspaceName } from "@/actions/workspace"
+import { workspaceNameSchema } from "@/schemas/workspace"
+import { StatusResponseDataType, StatusResponseType } from "@/types"
 import { zodResolver } from "@hookform/resolvers/zod"
+import { useForm } from "react-hook-form"
+import { z } from "zod"
+
+import { Button } from "@/components/ui/button"
 import {
   Form,
   FormControl,
@@ -12,18 +17,14 @@ import {
   FormItem,
   FormMessage,
 } from "@/components/ui/form"
+import { Input } from "@/components/ui/input"
+import { Label } from "@/components/ui/label"
 import { toast } from "@/components/ui/use-toast"
 import { Icons } from "@/components/icons"
-import { Label } from "@/components/ui/label"
-import { Input } from "@/components/ui/input"
-import { workspaceNameSchema } from "@/schemas/workspace"
-import { Button } from "@/components/ui/button"
-import { StatusResponseDataType, StatusResponseType } from "@/types"
-import { redirect, useParams } from "next/navigation"
-import { updateWorkspaceName } from "@/actions/workspace"
 
 export function Name() {
   const params = useParams()
+  const router = useRouter()
   const [success, setSuccess] = useState<StatusResponseDataType>()
   const [error, setError] = useState<StatusResponseDataType>()
   const [isPending, startTransition] = useTransition()
@@ -47,7 +48,7 @@ export function Name() {
             toast(data.error)
           }
           if (data?.success) {
-            redirect(`/${values.name}/settings`)
+            router.push(`/${values.name.toLowerCase()}/settings`)
           }
         })
         .catch((error) => {

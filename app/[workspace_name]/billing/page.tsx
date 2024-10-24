@@ -23,12 +23,10 @@ export default async function BillingPage() {
         heading="Billing"
         text="Manage billing and your subscription plan."
       />
-      <div className="grid lg:grid-cols-3 gap-4">
-        <Subscriptions
-          userSubscriptions={userSubscriptions}
-          allPlans={allPlans}
-        />
-      </div>
+      <Subscriptions
+        userSubscriptions={userSubscriptions}
+        allPlans={allPlans}
+      />
     </DashboardShell>
   )
 }

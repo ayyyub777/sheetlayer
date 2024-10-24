@@ -54,7 +54,7 @@ export default function Subscriptions({
         return (
           <Card key={index} className="flex items-center justify-between">
             <CardHeader>
-              <CardTitle className="flex items-center gap-2">
+              <CardTitle className="flex items-center gap-3">
                 <h1>Current plan ({plan.productName}) </h1>
                 <SubscriptionStatus
                   statusFormatted={subscription.statusFormatted}
@@ -66,7 +66,7 @@ export default function Subscriptions({
                   endsAt={subscription.endsAt}
                   interval={plan.interval}
                   intervalCount={plan.intervalCount}
-                  price={subscription.price}
+                  price={plan.price}
                   isUsageBased={plan.isUsageBased ?? false}
                 />
                 <SubscriptionDate
@@ -77,8 +77,8 @@ export default function Subscriptions({
                 />
               </CardDescription>
             </CardHeader>
-            <CardContent>
-              <div className="flex gap-2 mr-5">
+            <CardContent className="p-0 mr-5">
+              <div className="flex gap-2">
                 <Link href={`billing/change-plans/${subscription.id}`}>
                   <Button variant="outline" size="sm">
                     Change plan

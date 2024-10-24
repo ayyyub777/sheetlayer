@@ -56,7 +56,7 @@ export default function Plans({
   }
 
   return (
-    <>
+    <div className="grid lg:grid-cols-3 gap-4">
       {allPlans.map((plan) => (
         <Card key={plan.id}>
           <CardHeader>
@@ -68,7 +68,7 @@ export default function Plans({
 
           <CardContent>
             <PlanPrice price={Number(plan.price)} interval={plan.interval} />
-            <PlanFeatures productName={plan.productName} />
+            {/* <PlanFeatures productName={plan.productName} /> */}
           </CardContent>
 
           <CardFooter>
@@ -82,6 +82,6 @@ export default function Plans({
           </CardFooter>
         </Card>
       ))}
-    </>
+    </div>
   )
 }

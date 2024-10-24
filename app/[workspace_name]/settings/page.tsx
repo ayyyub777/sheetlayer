@@ -1,5 +1,3 @@
-import { DashboardHeader } from "@/components/header"
-import { DashboardShell } from "@/components/shell"
 import {
   Card,
   CardContent,
@@ -7,6 +5,9 @@ import {
   CardHeader,
   CardTitle,
 } from "@/components/ui/card"
+import { DashboardHeader } from "@/components/header"
+import { DashboardShell } from "@/components/shell"
+
 import { Name } from "./components/workspace/name"
 
 export const metadata = {
@@ -16,7 +17,10 @@ export const metadata = {
 export default async function SettingsPage() {
   return (
     <DashboardShell>
-      <DashboardHeader heading="Settings" />
+      <DashboardHeader
+        heading="Settings"
+        text="Manage account settings and preferences."
+      />
       <Card>
         <CardHeader>
           <CardTitle>Workspace</CardTitle>

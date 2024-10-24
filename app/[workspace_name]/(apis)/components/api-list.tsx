@@ -7,6 +7,7 @@ import { Api } from "@prisma/client"
 
 import { useAddApiModal } from "@/hooks/modals/use-add-api-modal"
 import { useDeleteApiModal } from "@/hooks/modals/use-delete-api-modal"
+import { Badge } from "@/components/ui/badge"
 import { Button } from "@/components/ui/button"
 import {
   Popover,
@@ -46,18 +47,21 @@ export default function ApiList({
           {apis.map((api, index) => (
             <div key={index} className="flex justify-between items-center">
               <div className="flex flex-col space-y-1.5 p-5">
-                <p className="font-semibold leading-none first-letter:uppercase">
-                  {api.title}
-                </p>
+                <div className="flex items-center gap-3">
+                  <h1 className="text-lg font-semibold leading-none first-letter:uppercase">
+                    {api.title}
+                  </h1>
+                  <Badge variant="secondary">Public</Badge>
+                </div>
                 <div
-                  className="flex items-end"
+                  className="flex items-center"
                   onClick={() =>
                     navigator.clipboard.writeText(
                       `${process.env.NEXT_PUBLIC_APP_URL}/api/${workspaceName}/${api.title}`
                     )
                   }
                 >
-                  <p className="mr-2 cursor-text text-sm leading-none text-muted-foreground">
+                  <p className="mr-2 cursor-text text-sm text-muted-foreground">
                     {`${process.env.NEXT_PUBLIC_APP_URL}/api/${workspaceName}/${api.title}`}
                   </p>
                   <Popover>

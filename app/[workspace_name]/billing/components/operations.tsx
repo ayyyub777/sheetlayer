@@ -50,6 +50,7 @@ export function Operations({
       <DropdownMenuContent align="end">
         {!subscription.isPaused && (
           <DropdownMenuItem
+            className="cursor-pointer"
             onClick={async () => {
               setLoading(true)
               await pauseUserSubscription(subscription.lemonSqueezyId).then(
@@ -65,6 +66,7 @@ export function Operations({
 
         {subscription.isPaused && (
           <DropdownMenuItem
+            className="cursor-pointer"
             onClick={async () => {
               setLoading(true)
               await unpauseUserSubscription(subscription.lemonSqueezyId).then(
@@ -77,14 +79,17 @@ export function Operations({
             Unpause payments
           </DropdownMenuItem>
         )}
-
-        <DropdownMenuItem className="flex justify-between">
-          <Link href={urls?.customer_portal}>
-            <p>Customer portal</p> <Icons.arrowUpRight className="size-3.5" />
-          </Link>
-        </DropdownMenuItem>
         <DropdownMenuItem>
           <Link href={urls?.update_payment_method}>Update payment method</Link>
+        </DropdownMenuItem>
+
+        <DropdownMenuItem>
+          <Link
+            href={urls?.customer_portal}
+            className="w-full flex justify-between items-center"
+          >
+            <p>Customer portal</p> <Icons.arrowUpRight className="size-3.5" />
+          </Link>
         </DropdownMenuItem>
         <DropdownMenuSeparator />
         <DropdownMenuItem

@@ -45,6 +45,6 @@
     @apply text-[28px] font-bold leading-none tracking-tight md:text-[32px] lg:text-[36px];
   }
   .h4 {
-    @apply text-[24px] font-bold leading-none tracking-tight md:text-[28px] lg:text-[30px];
+    @apply text-[24px] font-bold leading-none tracking-tight md:text-[28px];
   }
 }

@@ -1,7 +1,8 @@
+import { getApis } from "@/actions/api"
+
 import { DashboardHeader } from "@/components/header"
 import { DashboardShell } from "@/components/shell"
 import { ApiCreateButton } from "@/app/[workspace_name]/(apis)/components/api-create-button"
-import { getApis } from "@/actions/api"
 import ApiList from "@/app/[workspace_name]/(apis)/components/api-list"
 
 export default async function ApisPage({

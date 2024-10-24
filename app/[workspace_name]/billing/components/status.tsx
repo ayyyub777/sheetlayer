@@ -11,7 +11,7 @@ export function SubscriptionStatus({
 
   return (
     <>
-      <Badge variant="outline">{_statusFormatted}</Badge>
+      <Badge variant="secondary">{_statusFormatted}</Badge>
     </>
   )
 }

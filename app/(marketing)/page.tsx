@@ -1,15 +1,14 @@
-import Link from "next/link"
-import { cn } from "@/lib/utils"
-import { Button, buttonVariants } from "@/components/ui/button"
-import { marketingConfig } from "@/config/marketing"
-import { MainNav } from "@/components/main-nav"
-import { getCurrentUser } from "@/lib/session"
-import { db } from "@/lib/db"
-import { redirect } from "next/navigation"
-import { siteConfig } from "@/config/site"
 import Image from "next/image"
-import { Icons } from "@/components/icons"
+import Link from "next/link"
+import { redirect } from "next/navigation"
+
+import { marketingConfig } from "@/config/marketing"
+import { siteConfig } from "@/config/site"
+import { db } from "@/lib/db"
+import { getCurrentUser } from "@/lib/session"
+import { cn } from "@/lib/utils"
 import { Avatar, AvatarImage } from "@/components/ui/avatar"
+import { Button, buttonVariants } from "@/components/ui/button"
 import {
   Carousel,
   CarouselContent,
@@ -17,6 +16,8 @@ import {
   CarouselNext,
   CarouselPrevious,
 } from "@/components/ui/carousel"
+import { Icons } from "@/components/icons"
+import { MainNav } from "@/components/main-nav"
 
 export default async function IndexPage() {
   const user = await getCurrentUser()
